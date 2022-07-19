@@ -1,0 +1,246 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "random": "cpp",
+      "array": "cpp",
+      "any": "cpp",
+      "atomic": "cpp",
+      "bit": "cpp",
+      "*.tcc": "cpp",
+      "bitset": "cpp",
+      "cctype": "cpp",
+      "cfenv": "cpp",
+      "charconv": "cpp",
+      "chrono": "cpp",
+      "cinttypes": "cpp",
+      "clocale": "cpp",
+      "cmath": "cpp",
+      "codecvt": "cpp",
+      "complex": "cpp",
+      "condition_variable": "cpp",
+      "csetjmp": "cpp",
+      "csignal": "cpp",
+      "cstdarg": "cpp",
+      "cstddef": "cpp",
+      "cstdint": "cpp",
+      "cstdio": "cpp",
+      "cstdlib": "cpp",
+      "cstring": "cpp",
+      "ctime": "cpp",
+      "cuchar": "cpp",
+      "cwchar": "cpp",
+      "cwctype": "cpp",
+      "deque": "cpp",
+      "forward_list": "cpp",
+      "list": "cpp",
+      "map": "cpp",
+      "set": "cpp",
+      "unordered_map": "cpp",
+      "unordered_set": "cpp",
+      "vector": "cpp",
+      "exception": "cpp",
+      "algorithm": "cpp",
+      "functional": "cpp",
+      "iterator": "cpp",
+      "memory": "cpp",
+      "memory_resource": "cpp",
+      "numeric": "cpp",
+      "optional": "cpp",
+      "ratio": "cpp",
+      "regex": "cpp",
+      "string": "cpp",
+      "string_view": "cpp",
+      "system_error": "cpp",
+      "tuple": "cpp",
+      "type_traits": "cpp",
+      "utility": "cpp",
+      "fstream": "cpp",
+      "future": "cpp",
+      "initializer_list": "cpp",
+      "iomanip": "cpp",
+      "iosfwd": "cpp",
+      "iostream": "cpp",
+      "istream": "cpp",
+      "limits": "cpp",
+      "mutex": "cpp",
+      "new": "cpp",
+      "ostream": "cpp",
+      "scoped_allocator": "cpp",
+      "shared_mutex": "cpp",
+      "sstream": "cpp",
+      "stdexcept": "cpp",
+      "streambuf": "cpp",
+      "thread": "cpp",
+      "typeindex": "cpp",
+      "typeinfo": "cpp",
+      "valarray": "cpp",
+      "variant": "cpp",
+      "version": "cpp",
+      "cassert": "cpp",
+      "ccomplex": "cpp",
+      "cerrno": "cpp",
+      "cfloat": "cpp",
+      "ciso646": "cpp",
+      "climits": "cpp",
+      "cstdalign": "cpp",
+      "cstdbool": "cpp",
+      "ctgmath": "cpp",
+      "filesystem": "cpp",
+      "ios": "cpp",
+      "locale": "cpp",
+      "queue": "cpp",
+      "stack": "cpp",
+      "barrier": "cpp",
+      "compare": "cpp",
+      "concepts": "cpp",
+      "coroutine": "cpp",
+      "source_location": "cpp",
+      "latch": "cpp",
+      "numbers": "cpp",
+      "ranges": "cpp",
+      "semaphore": "cpp",
+      "span": "cpp",
+      "stop_token": "cpp",
+      "syncstream": "cpp"
+    },
+    "window.title": "🏃‍♂️💨",
+    "workbench.editor.showTabs": "multiple",
+    "workbench.editor.titleScrollbarSizing": "large",
+    "vim.showMarksInGutter": true,
+    "window.zoomLevel": 2,
+    "[cpp]": {
+      "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c17",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
+    "C_Cpp.intelliSenseEngine": "default",
+    // "clangd.arguments": [
+    // "--background-index",
+    // "--completion-style=bundled",
+    // "--compile-commands-dir=${workspaceFolder}/build",
+    // "--pretty",
+    // "--header-insertion=iwyu"
+    // ],
+    "clangd.restartAfterCrash": true,
+    "editor.tabSize": 2,
+  },
+  "extensions": {
+    "recommendations": [
+      "albert.tabout",
+      "eamodio.gitlens",
+      "github.copilot-chat",
+      "github.copilot-nightly",
+      "github.copilot",
+      "miguelsolorio.fluent-icons",
+      "pkief.material-icon-theme",
+      "sdras.night-owl",
+      "vscodevim.vim",
+      "ms-vscode.cpptools",
+      "josetr.cmake-language-support-vscode",
+      "leetcode.vscode-leetcode",
+      "ms-vscode.cmake-tools",
+      "twxs.cmake",
+      "llvm-vs-code-extensions.vscode-clangd"
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "debug",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${command:cmake.launchTargetPath}",
+        "args": [
+          // "${input:1}"
+        ],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [
+          {
+            // add the directory where our target was built to the PATHs
+            // it gets resolved by CMake Tools:
+            "name": "PATH",
+            "value": "$PATH:${command:cmake.launchTargetDirectory}"
+          }
+        ],
+        "externalConsole": false,
+        // "internalConsoleOptions": "neverOpen",
+        "MIMode": "gdb",
+        // "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ]
+      },
+      {
+        "name": "g++ - Build and debug active file",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "g++ build active file",
+        "internalConsoleOptions": "openOnSessionStart"
+      }
+    ],
+    "inputs": [
+      {
+        "id": "1",
+        "description": "args",
+        "type": "promptString",
+        "default": ""
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "label": "g++ build active file",
+        "command": "/usr/bin/g++",
+        "args": [
+          "-g",
+          "-O0",
+          "-std=c++17",
+          "${file}",
+          "-o",
+          "${workspaceFolder}/build/${fileBasenameNoExtension}"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/build"
+        },
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      }
+    ]
+  }
+}
