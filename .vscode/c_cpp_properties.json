@@ -1,0 +1,35 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "compilerPath": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "cppStandard": "c++17",
+            "cStandard": "c17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "mergeConfigurations": false
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "cppStandard": "c++17",
+            "cStandard": "c17",
+            "defines": [],
+            "intelliSenseMode": "linux-gcc-x64",
+            "mergeConfigurations": false
+        }
+    ],
+    "version": 4
+}
