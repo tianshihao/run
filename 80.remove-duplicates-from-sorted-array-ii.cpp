@@ -1,20 +1,20 @@
 /*
- * @lc app=leetcode.cn id=26 lang=cpp
+ * @lc app=leetcode.cn id=80 lang=cpp
  *
- * [26] Remove Duplicates from Sorted Array
+ * [80] Remove Duplicates from Sorted Array II
  *
- * https://leetcode.cn/problems/remove-duplicates-from-sorted-array/description/
+ * https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii/description/
  *
  * algorithms
- * Easy (54.25%)
- * Likes:    2736
+ * Medium (62.01%)
+ * Likes:    715
  * Dislikes: 0
- * Total Accepted:    1.2M
- * Total Submissions: 2.2M
- * Testcase Example:  '[1,1,2]'
+ * Total Accepted:    191.4K
+ * Total Submissions: 308.7K
+ * Testcase Example:  '[1,1,1,2,2,3]'
  *
- * Given an integer array nums sorted in non-decreasing order, remove the
- * duplicates in-place such that each unique element appears only once. The
+ * Given an integer array nums sorted in non-decreasing order, remove some
+ * duplicates in-place such that each unique element appears at most twice. The
  * relative order of the elements should be kept the same.
  *
  * Since it is impossible to change the length of the array in some languages,
@@ -50,10 +50,10 @@
  * Example 1:
  *
  *
- * Input: nums = [1,1,2]
- * Output: 2, nums = [1,2,_]
- * Explanation: Your function should return k = 2, with the first two elements
- * of nums being 1 and 2 respectively.
+ * Input: nums = [1,1,1,2,2,3]
+ * Output: 5, nums = [1,1,2,2,3,_]
+ * Explanation: Your function should return k = 5, with the first five elements
+ * of nums being 1, 1, 2, 2 and 3 respectively.
  * It does not matter what you leave beyond the returned k (hence they are
  * underscores).
  *
@@ -61,10 +61,10 @@
  * Example 2:
  *
  *
- * Input: nums = [0,0,1,1,1,2,2,3,3,4]
- * Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
- * Explanation: Your function should return k = 5, with the first five elements
- * of nums being 0, 1, 2, 3, and 4 respectively.
+ * Input: nums = [0,0,1,1,1,1,2,3,3]
+ * Output: 7, nums = [0,0,1,1,2,3,3,_,_]
+ * Explanation: Your function should return k = 7, with the first seven
+ * elements of nums being 0, 0, 1, 1, 2, 3 and 3 respectively.
  * It does not matter what you leave beyond the returned k (hence they are
  * underscores).
  *
@@ -74,7 +74,7 @@
  *
  *
  * 1 <= nums.length <= 3 * 10^4
- * -100 <= nums[i] <= 100
+ * -10^4 <= nums[i] <= 10^4
  * nums is sorted in non-decreasing order.
  *
  *
@@ -87,24 +87,26 @@ using namespace std;
 class Solution {
  public:
   int removeDuplicates(vector<int>& nums) {
-    // for (auto i{nums.begin()}; i != nums.end(); ++i) {
-    //   nums.erase(remove_if(i + 1, nums.end(),
-    //                        [i](int it) {
-    //                          if (it == *i) {
-    //                            return true;
-    //                          } else {
-    //                            return false;
-    //                          }
-    //                        }),
-    //              nums.end());
-    // }
-    int i = !nums.empty();
-    for (int n : nums) {
-      if (n > nums[i - 1]) {
-        nums[i++] = n;
+    int i{0}, cnt{0};
+    for (auto num : nums) {
+      if (num > nums[i - cnt]) {
+        nums[i++] = num;
+        cnt = 1;
+      } else if (num == nums[i - cnt] && cnt < 2) {
+        nums[i++] = num;
+        // Control the number of same elements do not greater than cnt.
+        cnt++;
       }
     }
     return i;
   }
 };
+
+// int main(int argc, char** argv) {
+//   Solution s;
+//   s.removeDuplicates(vector<int>{0, 0, 1, 1, 1, 1, 2, 3, 3});
+
+//   return 0;
+// }
+
 // @lc code=end
