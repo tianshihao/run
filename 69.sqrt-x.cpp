@@ -50,11 +50,34 @@
 class Solution {
  public:
   int mySqrt(int x) {
+    // return newtonMethod(x);
+
+    return mySqrtBinarySearch(x);
+  }
+
+  int newtonMethod(int x) {
     long r{x};
     while (r * r > x) {
       r = (r + x / r) / 2;
     }
     return r;
+  }
+
+  int mySqrtBinarySearch(int x) {
+    int left{0}, right{x}, result{-1};
+    while (left <= right) {
+      long long middle{static_cast<long long>(left + (right - left) / 2)};
+      long long square{middle * middle};
+
+      if (square <= x) {
+        result = middle;
+        left = middle + 1;
+      } else {
+        right = middle - 1;
+      }
+    }
+
+    return result;
   }
 };
 // @lc code=end
