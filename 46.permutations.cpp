@@ -46,20 +46,21 @@ class Solution {
  public:
   vector<vector<int>> result{};
   vector<vector<int>> permute(vector<int>& nums) {
-    backtrace(nums, 0, nums.size() - 1);
+    backtracking(nums, 0, nums.size() - 1);
 
     return result;
   }
 
-  void backtrace(vector<int>& nums, int depth, int n) {
-    if (depth == n) {
+  void backtracking(vector<int> &nums, int cur_depth, int max_depth) {
+    if (cur_depth == max_depth) {
       result.emplace_back(nums);
     }
 
-    for (int i = depth; i <= n; ++i) {
-      swap(nums[depth], nums[i]);
-      backtrace(nums, depth + 1, n);
-      swap(nums[depth], nums[i]);
+    for (int depth = cur_depth; depth <= max_depth; ++depth) {
+      swap(nums[cur_depth], nums[depth]);
+      backtracking(nums, cur_depth + 1, max_depth);
+      // nums is a reference, so restore it.
+      swap(nums[cur_depth], nums[depth]);
     }
 
     return;
