@@ -73,44 +73,49 @@
 using namespace std;
 
 class LRUCache {
+ private:
+  // cache
+  list<pair<int, int>> cache{};
+  // index table
+  unordered_map<int, list<pair<int, int>>::iterator> table{};
+  int size{0};
+
  public:
-  // Cache.
-  list<pair<int, int>> l;
-  // Index.
-  unordered_map<int, list<pair<int, int>>::iterator> m;
-  int size;
-  LRUCache(int capacity) { size = capacity; }
+  LRUCache(int capacity) : size{capacity} {}
 
   int get(int key) {
-    if (m.find(key) == m.end()) {
+    if (table.find(key) == table.end()) {
       return -1;
     }
-    // Transfer m[key] into the container l, inserting it at position l.begin().
-    // Update recently used.
-    l.splice(l.begin(), l, m[key]);
-    return m[key]->second;
+    // move {key, value} to the front of cache.
+    cache.splice(cache.begin(), cache, table[key]);
+    // return value via iterator in the table.
+    return table[key]->second;
   }
 
   void put(int key, int value) {
-    // Key exists.
-    if (m.find(key) != m.end()) {
-      l.splice(l.begin(), l, m[key]);
-      m[key]->second = value;
+    // update {key, value}.
+    if (table.find(key) != table.end()) {
+      // move {key, value} to the front of cache.
+      cache.splice(cache.begin(), cache, table[key]);
+      // update value.
+      table[key]->second = value;
       return;
     }
-    // List is full.
-    if (l.size() == size) {
-      // This is the least recently used key.
-      auto delete_key{l.back().first};
-      // Delete {key, value}.
-      l.pop_back();
-      // Erase key.
-      m.erase(delete_key);
+    // delete least recently used.
+    if (cache.size() == size) {
+      // get index to be deleted.
+      auto idx_to_be_deleted{cache.back().first};
+      // delete from cache.
+      cache.pop_back();
+      // delete index
+      table.erase(idx_to_be_deleted);
     }
-    // Put new element in the front.
-    l.push_front({key, value});
-    // Update index.
-    m[key] = l.begin();
+    // put new {key, value} in the front of cache
+    cache.push_front({key, value});
+    // update index
+    table[key] = cache.begin();
+    return;
   }
 };
 
