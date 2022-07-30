@@ -1,19 +1,19 @@
 /*
- * @lc app=leetcode.cn id=94 lang=cpp
+ * @lc app=leetcode.cn id=144 lang=cpp
  *
- * [94] Binary Tree Inorder Traversal
+ * [144] Binary Tree Preorder Traversal
  *
- * https://leetcode.cn/problems/binary-tree-inorder-traversal/description/
+ * https://leetcode.cn/problems/binary-tree-preorder-traversal/description/
  *
  * algorithms
- * Easy (76.04%)
- * Likes:    1513
+ * Easy (71.20%)
+ * Likes:    877
  * Dislikes: 0
- * Total Accepted:    898.5K
- * Total Submissions: 1.2M
+ * Total Accepted:    661.9K
+ * Total Submissions: 929.7K
  * Testcase Example:  '[1,null,2,3]'
  *
- * Given the root of a binary tree, return the inorder traversal of its nodes'
+ * Given the root of a binary tree, return the preorder traversal of its nodes'
  * values.
  *
  *
@@ -21,7 +21,7 @@
  *
  *
  * Input: root = [1,null,2,3]
- * Output: [1,3,2]
+ * Output: [1,2,3]
  *
  *
  * Example 2:
@@ -48,6 +48,7 @@
  *
  *
  * Follow up: Recursive solution is trivial, could you do it iteratively?
+ *
  */
 
 // @lc code=start
@@ -66,18 +67,18 @@ using namespace std;
 
 class Solution {
  public:
-  vector<int> inorderTraversal(TreeNode *root) {
+  vector<int> preorderTraversal(TreeNode *root) {
     stack<TreeNode *> s;
-    TreeNode *p{root};
     vector<int> result{};
+    TreeNode *p{root};
 
-    while (p != nullptr || !s.empty()) {
+    while (s.empty() != true || p != nullptr) {
       if (p != nullptr) {
+        result.emplace_back(p->val);
         s.push(p);
         p = p->left;
       } else {
         p = s.top();
-        result.emplace_back(p->val);
         p = p->right;
         s.pop();
       }
