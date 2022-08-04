@@ -70,9 +70,11 @@ using namespace std;
 class Solution {
  public:
   bool isValidBST(TreeNode *root) {
-    vector<int> inorder{};
+    // vector<int> inorder{};
     stack<TreeNode *> s;
     TreeNode *node{root};
+    int prev{numeric_limits<int>::min()};
+    bool is_first{true};
 
     while (node != nullptr || s.empty() == false) {
       if (node != nullptr) {
@@ -81,23 +83,20 @@ class Solution {
       } else {
         node = s.top();
         s.pop();
-        inorder.emplace_back(node->val);
+        // inorder.emplace_back(node->val);
+        if (node->val > prev || (true == is_first && node->val == prev)) {
+          prev = node->val;
+          if (node->val == prev) {
+            is_first = false;
+          }
+        } else {
+          return false;
+        }
+
         node = node->right;
       }
     }
-
-    bool is_validate{true};
-    for (size_t i{0}; i < inorder.size() - 1; ++i) {
-      size_t j{i + 1};
-      if (inorder[i] < inorder[j]) {
-        continue;
-      } else {
-        is_validate = false;
-        break;
-      }
-    }
-
-    return is_validate;
+    return true;
   }
 };
 // @lc code=end
