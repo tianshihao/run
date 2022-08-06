@@ -4,6 +4,7 @@ using namespace std;
 vector<int> MergeVector(const vector<int>& nums1, const vector<int>& nums2) {
   sort(nums1.begin(), nums1.end());
   sort(nums2.begin(), nums2.end());
+  std::make_heap(nums1.begin(), nums1.end(), std::greater<int>());
 
   vector<int> result{};
 
