@@ -19,7 +19,7 @@ class Solution {
     char c;
     for (int i = 0; i < str.size(); ++i) {
       c = str[i];
-      if (IsChar(c)) {
+      if (IsNonSpace(c)) {
         s.push(non_word_char);
         word += c;
       } else {
@@ -44,7 +44,7 @@ class Solution {
     return result;
   }
 
-  bool IsChar(char c) {
+  bool IsNonSpace(char c) {
     if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
       return true;
     } else {
