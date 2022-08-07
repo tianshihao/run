@@ -94,17 +94,31 @@ class Solution {
     string delimiter{"."};
     size_t pos{0};
 
+    // split
     while ((pos = version1.find(delimiter, pos)) != string::npos) {
       version1_numbers.emplace(stoi(version1.substr(0, pos)));
+      version1.erase(0, pos + 1);
+      pos = 0;
     }
     version1_numbers.emplace(stoi(version1));
 
     pos = 0;
     while ((pos = version2.find(delimiter, pos)) != string::npos) {
       version2_numbers.emplace(stoi(version2.substr(0, pos)));
+      version2.erase(0, pos + 1);
+      pos = 0;
     }
     version2_numbers.emplace(stoi(version2));
 
+    // align
+    while (version1_numbers.size() < version2_numbers.size()) {
+      version1_numbers.emplace(0);
+    }
+    while (version1_numbers.size() > version2_numbers.size()) {
+      version2_numbers.emplace(0);
+    }
+
+    // compare
     while (!version1_numbers.empty() && !version2_numbers.empty()) {
       if (version1_numbers.front() > version2_numbers.front()) {
         return 1;
@@ -115,16 +129,16 @@ class Solution {
         version2_numbers.pop();
       }
     }
-    if (!version1_numbers.empty()) {
-      return 1;
-    } else
+
+    return 0;
   }
 };
 
-int main(int argc, char const *argv[]) {
-  Solution s;
-  s.compareVersion("1.01", "1.001");
-  return 0;
-}
+// int main(int argc, char const *argv[]) {
+//   Solution s;
+//   // s.compareVersion("10.6.5", "10.6");
+//   s.compareVersion("1.01", "1.001");
+//   return 0;
+// }
 
 // @lc code=end
