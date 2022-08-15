@@ -91,6 +91,8 @@ class Solution {
     dfs(grid, i - 1, j, area);
     dfs(grid, i, j + 1, area);
     dfs(grid, i, j - 1, area);
+
+    return;
   }
 };
 // @lc code=end
