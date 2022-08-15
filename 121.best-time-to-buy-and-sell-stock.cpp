@@ -63,6 +63,7 @@ class Solution {
     int max_profit{numeric_limits<int>::min()};
     int min_price{numeric_limits<int>::max()};
     for (int price : prices) {
+      // Maintain a minimum price in history.
       min_price = std::min(min_price, price);
       max_profit = std::max(max_profit, price - min_price);
     }
