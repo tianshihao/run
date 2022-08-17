@@ -70,6 +70,27 @@ using namespace std;
 
 class Solution {
  public:
-  int maxProfit(vector<int>& prices) {}
+  int maxProfit(vector<int>& prices) {
+    auto days{prices.size()};
+
+    // dp[i][0] represents the max profit of not holding the stock on day i.
+    // dp[i][1] represents the max profit of holding the stock on day i.
+    vector<vector<int>> dp(days, vector<int>(2, 0));
+
+    // Init.
+    dp[0][0] = 0;
+    dp[0][1] = -prices[0];
+
+    for (auto day{static_cast<size_t>(1)}; day < days; ++day) {
+      // Transition equation.
+
+      // Sell the stock on day - 1 with prices[day].
+      dp[day][0] = max(dp[day - 1][0], dp[day - 1][1] + prices[day]);
+      // Buy the stock on day - 1 prices[day].
+      dp[day][1] = max(dp[day - 1][1], dp[day - 1][0] - prices[day]);
+    }
+
+    return dp[days - 1][0];
+  }
 };
 // @lc code=end
