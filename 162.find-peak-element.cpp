@@ -62,17 +62,22 @@ class Solution {
   int findPeakElement(vector<int>& nums) {
     int left = 0, right = nums.size() - 1;
 
+    // Inside the  interval.
     while (left < right - 1) {
       int middle = (left + right) / 2;
+      // Peak.
       if (nums[middle] > nums[middle - 1] && nums[middle] > nums[middle + 1]) {
         return middle;
       } else if (nums[middle] > nums[middle + 1]) {
+        // Descending.
         right = middle - 1;
       } else {
+        // Ascending.
         left = middle + 1;
       }
     }
 
+    // Considering interval's endpoints.
     if (nums[left] > nums[right]) {
       return left;
     } else {
