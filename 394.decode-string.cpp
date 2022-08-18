@@ -69,6 +69,92 @@ using namespace std;
 
 class Solution {
  public:
-  string decodeString(string s) {}
+  string decodeString(string s) {
+    stack<int> number_stack{};
+    stack<string> str_stack{};
+
+    int number{0};
+    string str{};
+
+    for (const auto ch : s) {
+      // Ignore '['.
+      if ('[' == ch) {
+        continue;
+      }
+
+      // Collect numbers and letters.
+      if (isdigit(ch)) {
+        number = number * 10 + atoi(&ch);
+
+        if (str.empty() != true) {
+          str_stack.push(str);
+          str.clear();
+        }
+
+        continue;
+      } else if (isalpha(ch)) {
+        str += ch;
+
+        if (number != 0) {
+          number_stack.push(number);
+          number = 0;
+        }
+
+        continue;
+      }
+
+      // Pop.
+      if (']' == ch) {
+        // Clear the previous string.
+        if (str.empty() != true) {
+          str_stack.push(str);
+          str.clear();
+        }
+
+        // Repeat.
+
+        const auto str_on_the_top{str_stack.top()};
+        str_stack.pop();
+        auto repeated_times{number_stack.top()};
+        number_stack.pop();
+
+        string repeated_str{getRepeatedString(str_on_the_top, repeated_times)};
+
+        // Update str_stack.
+
+        if (str_stack.empty() != true) {
+          str_stack.top() = str_stack.top() + repeated_str;
+          // str_stack.pop();
+        } else {
+          str_stack.push(repeated_str);
+        }
+      }
+    }
+
+    // Trailing string.
+    return str_stack.top() + str;
+  }
+
+  string getRepeatedString(string str, int times) {
+    string repeated_str{};
+    while (times--) {
+      repeated_str += str;
+    }
+
+    return repeated_str;
+  }
 };
+
+int main(int argc, char** argv) {
+  Solution s;
+  // string test_case{"3[a2[c]]"};
+  string test_case{"2[abc]3[cd]ef"};
+  // string test_case{"8[z3[a]6[a2[bc]]4[as]]"};
+  // string test_case{"abc3[cd]xyz"};
+
+  cout << s.decodeString(test_case);
+
+  return 0;
+}
+
 // @lc code=end
