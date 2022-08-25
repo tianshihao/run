@@ -34,8 +34,8 @@ class MySharedPointer {
 
   // Copy constructor.
   MySharedPointer(const MySharedPointer& obj)
-      : m_ref_count{obj.m_ref_count}, m_pointer{m_pointer} {
-    if (nullptr != obj.m_pointer) {
+      : m_ref_count{obj.m_ref_count}, m_pointer{obj.m_pointer} {
+    if (nullptr != m_pointer) {
       ++(*m_ref_count);
     }
   }
@@ -81,7 +81,7 @@ class MySharedPointer {
 
   type* operator->() const { return m_pointer; }
 
-  type& operator*() const { return m_pointer; }
+  type& operator*() const { return *m_pointer; }
 
   my_size_t count() const { return *m_ref_count; }
 
@@ -104,8 +104,9 @@ class MySharedPointer {
 // Test class.
 class Box {
  public:
-  int length{0}, width{0}, height{0};
-  Box() : length{0}, width{0}, height{0} {}
+  int length{3};
+  int width{3};
+  int height{3};
 };
 
 void test1() {
@@ -117,10 +118,18 @@ void test1() {
   MySharedPointer<Box> box1(new Box());
   std::cout << box1.count() << std::endl;
 
+  std::cout << (*box1).length << std::endl;
+  std::cout << box1.get()->length << std::endl;
+  std::cout << box1->length << std::endl;
+
   // Calls copy constructor.
   MySharedPointer<Box> box2(box1);
   std::cout << box1.count() << std::endl;
   std::cout << box2.count() << std::endl;
+
+  std::cout << (*box2).length << std::endl;
+  std::cout << box2.get()->length << std::endl;
+  std::cout << box2->length << std::endl;
 }
 
 int main() {
