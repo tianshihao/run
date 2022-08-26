@@ -64,17 +64,26 @@ using namespace std;
 class Solution {
  public:
   ListNode* swapPairs(ListNode* head) {
-    ListNode** p{&head};
-    ListNode *current_node{nullptr}, *next_node{nullptr};
+    // What we manipulate is pointer.
+    using NodeLink = ListNode*;
+    NodeLink* pointer_to_link{&head};
+    NodeLink link_to_current_node{nullptr}, link_to_next_node{nullptr};
 
-    while ((current_node = *p) && (next_node = current_node->next)) {
-      current_node->next = next_node->next;
-      next_node->next = current_node;
-      *p = next_node;
-      p = &(current_node->next);
+    while ((link_to_current_node = *pointer_to_link) &&
+           (link_to_next_node = link_to_current_node->next)) {
+      // Swap the pair {current_node -> next_node} is easy to understand.
+      link_to_current_node->next = link_to_next_node->next;
+      link_to_next_node->next = link_to_current_node;
+      // Make previous link point to the {next_node -> current_node}.
+      // And when first loop, this will ensure the head point to the beginning
+      // of new list.
+      *pointer_to_link = link_to_next_node;
+      // Point to the link after the pair.
+      pointer_to_link = &(link_to_current_node->next);
     }
 
     return head;
   }
 };
+
 // @lc code=end
