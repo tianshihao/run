@@ -1,3 +1,3 @@
 # Run 🏃‍♂️💨
 
-Sharpen the mind.
+Sharpen mind and kill time.
