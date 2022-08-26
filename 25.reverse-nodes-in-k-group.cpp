@@ -73,7 +73,7 @@ class Solution {
     //   Previous interval    Next interval
     // ... -> e -> f -> g] -> [h -> i -> j -> ...
     //                  ⬆      ⬆
-    //      end_of_last_k      start_of_next_k
+    //      end_of_prev_k      start_of_next_k
 
     // Point to the last node of the previous k nodes.
     ListNode* end_of_prev_k{dummy};
@@ -111,7 +111,7 @@ class Solution {
         curr = the_next;
       }
 
-      // ! Inlay the reversed sub linked list in to the origin linked list.
+      // ! Inlay the reversed sub linked list into the origin linked list.
       start_of_next_k->next = curr;
       end_of_prev_k->next = prev;
 
