@@ -82,6 +82,7 @@ class Solution {
   }
 
   // Easy, divide into 3 sections. [..., mid - 1], [mid], [mid + 1, ...].
+
   int DivideAndConquer(vector<int>& nums, int left, int right) {
     if (left > right) {
       return numeric_limits<int>::min();
