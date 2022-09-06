@@ -60,11 +60,11 @@ class Solution {
 
   void backtracking(vector<int> nums, int cur_depth, int max_depth) {
     if (cur_depth == max_depth) {
-      result.push_back(nums);
+      result.emplace_back(nums);
       return;
     }
 
-    for (int depth = cur_depth; depth <= max_depth; ++depth) {
+    for (int depth{cur_depth}; depth <= max_depth; ++depth) {
       // make sure swap bewteen unique elements.
       if (depth != cur_depth && nums[cur_depth] == nums[depth]) {
         continue;

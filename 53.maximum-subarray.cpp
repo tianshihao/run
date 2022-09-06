@@ -62,34 +62,40 @@ using namespace std;
 class Solution {
  public:
   int maxSubArray(vector<int>& nums) {
-    // int max{numeric_limits<int>::min()};
-    // int cur{0};
-    // for (auto num : nums) {
-    //   cur += num;
-    //   max = std::max(max, cur);
-    //   if (cur < 0) {
-    //     cur = 0;
-    //   }
-    // }
-    //
-    // return max;
+    // return dp(nums);
     return DivideAndConquer(nums, 0, nums.size() - 1);
   }
 
+  int dp(vector<int> const& nums) {
+    int max_sum{numeric_limits<int>::min()};
+    int sum{0};
+    for (auto num : nums) {
+      sum += num;
+      max_sum = std::max(max_sum, sum);
+      // Reset subarray sum when it is less than 0.
+      if (sum < 0) {
+        sum = 0;
+      }
+    }
+
+    return max_sum;
+  }
+
+  // Easy, divide into 3 sections. [..., mid - 1], [mid], [mid + 1, ...].
   int DivideAndConquer(vector<int>& nums, int left, int right) {
     if (left > right) {
       return numeric_limits<int>::min();
     }
-    int mid = left + (right - left) / 2;
-    int mid2left_max = 0, mid2right_max = 0;
-    int left_max = DivideAndConquer(nums, left, mid - 1);
-    int right_max = DivideAndConquer(nums, mid + 1, right);
+    int mid{left + (right - left) / 2};
+    int mid2left_max{0}, mid2right_max{0};
+    int left_max{DivideAndConquer(nums, left, mid - 1)};
+    int right_max{DivideAndConquer(nums, mid + 1, right)};
 
-    for (int i = mid - 1, sum = 0; i >= left; --i) {
+    for (int i{mid - 1}, sum{0}; i >= left; --i) {
       sum += nums[i];
       mid2left_max = std::max(sum, mid2left_max);
     }
-    for (int i = mid + 1, sum = 0; i <= right; ++i) {
+    for (int i{mid + 1}, sum{0}; i <= right; ++i) {
       sum += nums[i];
       mid2right_max = std::max(sum, mid2right_max);
     }
