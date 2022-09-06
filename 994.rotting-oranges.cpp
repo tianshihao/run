@@ -84,7 +84,7 @@ class Solution {
 
     int minute{0};
 
-    // Init.
+    // Init. This is multi-entry init.
 
     queue<pair<int, int>> cell_queue{};
     int fresh_orange_cnt{0};

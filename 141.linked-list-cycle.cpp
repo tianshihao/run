@@ -79,6 +79,7 @@ class Solution {
  public:
   bool hasCycle(ListNode *head) {
     ListNode *rev{reverseList(head)};
+    // At least two nodes there could be a cycle.
     if (head && head->next && rev == head) {
       return true;
     }
@@ -87,7 +88,7 @@ class Solution {
 
   ListNode *reverseList(ListNode *head) {
     ListNode *prev{nullptr};
-    while(head) {
+    while (nullptr != head) {
       ListNode *next{head->next};
       head->next = prev;
       prev = head;

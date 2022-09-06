@@ -65,6 +65,7 @@ class Solution {
     for (int price : prices) {
       // Maintain a minimum price in history.
       min_price = std::min(min_price, price);
+      // Update max_profit with min_price.
       max_profit = std::max(max_profit, price - min_price);
     }
     return max_profit;
