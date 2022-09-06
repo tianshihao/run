@@ -71,6 +71,7 @@ class Solution {
     }
     queue<TreeNode *> q;
     q.push(root);
+    // Add nullptr as the end of a level.
     q.push(nullptr);
     vector<int> result{};
     TreeNode *prev{nullptr};
@@ -80,12 +81,14 @@ class Solution {
       q.pop();
 
       if (nullptr == node) {
-        // add next level end mark when current level is end
+        // Add end mark for rest nodes when current level is end.
         if (q.size() > 0) {
           q.push(nullptr);
         }
+        // prev points to the last node in a level.
         result.emplace_back(prev->val);
       } else {
+        // Update prev every time.
         prev = node;
         if (node->left) {
           q.push(node->left);

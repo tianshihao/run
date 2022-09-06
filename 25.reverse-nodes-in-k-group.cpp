@@ -72,7 +72,7 @@ class Solution {
 
     //   Previous interval    Next interval
     // ... -> e -> f -> g] -> [h -> i -> j -> ...
-    //                  ⬆      ⬆
+    //                  ^      ^
     //      end_of_prev_k      start_of_next_k
 
     // Point to the last node of the previous k nodes.
