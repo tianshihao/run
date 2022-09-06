@@ -71,6 +71,7 @@ class Solution {
     for (int i = 0; i < row; ++i) {
       for (int j = 0; j < column; ++j) {
         if (grid[i][j] == '1') {
+          // The times of dfs is the numbers of islands.
           dfs(grid, i, j);
           ++num;
         }
@@ -88,6 +89,7 @@ class Solution {
 
     grid[i][j] = '0';
 
+    // Spreading.
     dfs(grid, i + 1, j);
     dfs(grid, i - 1, j);
     dfs(grid, i, j + 1);
