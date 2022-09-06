@@ -51,12 +51,13 @@ class Solution {
     return result;
   }
 
-  void backtracking(vector<int> &nums, int cur_depth, int max_depth) {
+  void backtracking(vector<int>& nums, int cur_depth, int max_depth) {
     if (cur_depth == max_depth) {
       result.emplace_back(nums);
+      return;
     }
 
-    for (int depth = cur_depth; depth <= max_depth; ++depth) {
+    for (int depth{cur_depth}; depth <= max_depth; ++depth) {
       swap(nums[cur_depth], nums[depth]);
       backtracking(nums, cur_depth + 1, max_depth);
       // nums is a reference, so restore it.

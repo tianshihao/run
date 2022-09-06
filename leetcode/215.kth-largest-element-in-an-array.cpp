@@ -48,7 +48,7 @@ class Solution {
   int findKthLargest(vector<int>& nums, int k) {
     // return findKthLargestPartition(nums, 0, nums.size() - 1, k);
     // return findKthLargestPQ(nums, k);
-    return findKthLargestMaxHeap(nums, k);
+    // return findKthLargestMaxHeap(nums, k);
   }
 
   int findKthLargestPartition(vector<int>& nums, int left, int right, int k) {
