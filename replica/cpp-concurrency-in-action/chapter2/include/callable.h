@@ -14,3 +14,9 @@ struct Func {
 
   void DoSomething(int cnt) { std::cout << cnt << std::endl; }
 };
+
+void DoWork(int i) {
+  std::cout << "Doing work " << i << std::endl;
+
+  return;
+}
