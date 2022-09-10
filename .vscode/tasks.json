@@ -8,6 +8,7 @@
         "-fdiagnostics-color=always",
         "-Wall",
         "-pthread",
+        "-std=c++11",
         "-g",
         "${fileDirname}/*.cpp",
         "-o",
