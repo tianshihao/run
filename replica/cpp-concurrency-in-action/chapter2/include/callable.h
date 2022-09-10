@@ -1,9 +1,11 @@
+#pragma once
+
 #include <iostream>
 
-struct Func {
+struct FuncObj {
   int& i;
 
-  Func(int& i_) : i{i_} {}
+  FuncObj(int& i_) : i{i_} {}
 
   void operator()() {
     for (unsigned cnt{0}; cnt < 1000000; ++cnt) {

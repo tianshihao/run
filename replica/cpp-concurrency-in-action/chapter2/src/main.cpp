@@ -4,13 +4,14 @@
 
 #include "../include/callable.h"
 #include "../include/joining_thread.h"
+#include "../include/parallel_accumulate.h"
 #include "../include/scoped_thread.h"
 #include "../include/thread_guard.h"
 
 void Oops() {
   int some_local_state{0};
-  Func my_func{some_local_state};
-  std::thread my_thread{my_func};
+  FuncObj my_func_obj{some_local_state};
+  std::thread my_thread{my_func_obj};
   my_thread.detach();
 
   // Probably my_thread is stilling running after Oops was exit.  The my_thread
@@ -22,10 +23,10 @@ void Oops() {
 
 void UsingThreadGuard() {
   int some_local_state{1};
-  Func my_func{some_local_state};
+  FuncObj my_func_obj{some_local_state};
   // Cause the ThreadGuard holds a reference to std::thread, we must create a
   // separate named variable first.
-  std::thread t{my_func};
+  std::thread t{my_func_obj};
   // The thread guard will ensure current process waits for new thread finish,
   // thus there are no problem.
   ThreadGuard g{t};
@@ -39,7 +40,7 @@ void UsingScopedThread() {
   int some_local_state{2};
   // By using the new uniform initialization syntax to avoid declaring a t
   // function that takes a single paremeter.
-  ScopedThread t{std::thread{Func{some_local_state}}};
+  ScopedThread t{std::thread{FuncObj{some_local_state}}};
 
   // Do something in current thread.
 
@@ -47,8 +48,8 @@ void UsingScopedThread() {
 }
 
 void UsingJoiningThread() {
-  // Func my_func;
-  // JoiningThread{my_func, 3};
+  // Func my_func_obj;
+  // JoiningThread{my_func_obj, 3};
 
   JoiningThread{DoWork, 3};
 
@@ -74,10 +75,28 @@ void SpawnThread() {
   }
 }
 
+void UsingParalleAccumulate() {
+  // Spawn vector sample.
+  std::vector<double> nums;
+
+  for (int i{0}; i < 100; ++i) {
+    nums.emplace_back(static_cast<double>(i));
+  }
+
+  std::cout << "Reuslt of accumulate is: "
+            << std::accumulate(nums.begin(), nums.end(), 0.0) << std::endl;
+
+  std::cout << "Result of parallel accumulate is: "
+            << ParallelAccumulate(nums.begin(), nums.end(), 0.0) << std::endl;
+
+  return;
+}
+
 int main(int argc, char** argv) {
   // Oops();
   // UsingThreadGuard();
   // UsingScopedThread();
-  SpawnThread();
+  // SpawnThread();
+  UsingParalleAccumulate();
   return 0;
 }
