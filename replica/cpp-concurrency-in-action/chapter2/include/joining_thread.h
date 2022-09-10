@@ -45,6 +45,8 @@ class JoiningThread {
     }
   }
 
+  void Swap(JoiningThread &other) noexcept { t.swap(other.t); }
+  std::thread::id GetID() const noexcept { return t.get_id(); }
   bool Joinable() const noexcept { return t.joinable(); }
   void Join() { t.join(); }
   void Detach() { t.detach(); }
