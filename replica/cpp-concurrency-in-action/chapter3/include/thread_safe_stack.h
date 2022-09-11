@@ -1,3 +1,14 @@
+/**
+ * @file thread_safe_stack.h
+ * @author your name (you@domain.com)
+ * @brief Listing 3.5 A fleshed-out class definition for a thread-safe stack
+ * @version 0.1
+ * @date 2022-09-11
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #pragma once
 
 #include <exception>
@@ -19,7 +30,7 @@ class ThreadSafeStack {
   ThreadSafeStack();
 
   // Do copy in the constructor body rather than the member initializer list
-  // in order to ensure that the mutex is heald across the copy.
+  // in order to ensure that the mutex is held across the copy.
   ThreadSafeStack(ThreadSafeStack const& other) {
     // The copy constructor locks the mutex in the source object and then
     // copies the internal stack.
