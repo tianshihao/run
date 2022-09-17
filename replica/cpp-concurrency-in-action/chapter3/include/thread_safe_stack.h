@@ -35,6 +35,8 @@ class ThreadSafeStack {
     // The copy constructor locks the mutex in the source object and then
     // copies the internal stack.
     // ? What is the difference between lock this->m and other.m here?
+    // * This stack implementation is copyable ---- the copy constructor locks
+    // * the mutex in the source object and then copies the internal stack.
     std::lock_guard<std::mutex> lock{other.m};
     data = other.data;
   }
@@ -49,7 +51,7 @@ class ThreadSafeStack {
     return;
   }
 
-  // Returns std::shared_ptr<>.
+  // Option 1: Returns std::shared_ptr<>.
   std::shared_ptr<T> Pop() {
     std::lock_guard<std::mutex> lock{m};
     if (data.empty()) {
@@ -61,7 +63,7 @@ class ThreadSafeStack {
     return res;
   }
 
-  // Takes a reference to a location in which to store the value.
+  // Option 3: Takes a reference to a location in which to store the value.
   void Pop(T& value) {
     std::lock_guard<std::mutex> lock{m};
     if (data.empty()) {
