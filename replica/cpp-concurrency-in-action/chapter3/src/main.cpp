@@ -3,6 +3,11 @@
 #include <memory>
 #include <mutex>
 
+#include "connection_manager.h"
+#include "dns_cache.h"
+#include "hierarchical_mutex.h"
+#include "thread_safe_stack.h"
+
 /**************** Listing 3.1 Protecting a list with a mutex. ****************/
 
 std::list<int> some_list;
@@ -63,7 +68,7 @@ void MaliciousFunction(SomeData &protected_data) {
 
 DataWrapper x;
 
-void Foo() {
+void Foo1() {
   // Passing in a malicious function.
   x.ProcessData(MaliciousFunction);
   // Unprotected access to protected data.
@@ -81,15 +86,15 @@ class SomeBigObject {
 
 void Swap(SomeBigObject &lhs, SomeBigObject &rhs);
 
-class X {
+class Connection {
  private:
   SomeBigObject some_detail;
   std::mutex m;
 
  public:
-  X(SomeBigObject const &sd) : some_detail{sd} {}
+  Connection(SomeBigObject const &sd) : some_detail{sd} {}
 
-  friend void Swap(X &lhs, X &rhs) {
+  friend void Swap(Connection &lhs, Connection &rhs) {
     // Ensure lhs and rhs are different instances.  Because attemping to acquire
     // a lock on st::mutex when you already hold it is undefined behavior.
     if (&lhs == &rhs) {
@@ -132,6 +137,9 @@ class Z {
     std::unique_lock<std::mutex> lock_b{rhs.m, std::defer_lock};
     // Mutexes are locked here.
     std::lock(lock_a, lock_b);
+
+    // The scoped_lock of cpp17 is recommended.
+    // std::scoped_lock lck{lhs.m, rhs.m};
 
     Swap(lhs.some_detail, rhs.some_detail);
 
@@ -185,47 +193,10 @@ void InitResource() {
   return;
 }
 
-void Foo() {
+void Foo2() {
   // Initialization is called exactly once.
   std::call_once(resource_flag, InitResource);
   resource_ptr->DoSomething();
 }
-
-/**
- * Listing 3.12 Thread-safe lazy initailization of a class member using
- * std::call_once
- */
-
-class ConnectionHandle;
-class ConnectionInfo;
-class ConnectionManager;
-class DataPacket;
-
-class XRewritten {
- private:
-  ConnectionInfo connection_details;
-  ConnectionHandle connection;
-  std::once_flag connection_init_flag;
-  void OpenConnection() {
-    connection = ConnectionManager.Open(connection_details);
-    return;
-  }
-
- public:
-  XRewritten(ConnectionInfo const &connection_details_)
-      : connection_details{connection_details_} {}
-
-  void SendData(DataPacket const &data) {
-    std::call_once(connection_init_flag, &XRewritten::OpenConnection, this);
-    connection.SendData(data);
-
-    return;
-  }
-
-  DataPacket ReceiveData() {
-    std::call_once(connection_init_flag, &XRewritten::OpenConnection, this);
-    return connection.ReceiveData();
-  }
-};
 
 int main(int argc, char **argv) { return 0; }
