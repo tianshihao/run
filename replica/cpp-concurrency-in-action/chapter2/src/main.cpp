@@ -2,11 +2,11 @@
 #include <thread>
 #include <vector>
 
-#include "../include/callable.h"
-#include "../include/joining_thread.h"
-#include "../include/parallel_accumulate.h"
-#include "../include/scoped_thread.h"
-#include "../include/thread_guard.h"
+#include "callable.h"
+#include "joining_thread.h"
+#include "parallel_accumulate.h"
+#include "scoped_thread.h"
+#include "thread_guard.h"
 
 void Oops() {
   int some_local_state{0};
