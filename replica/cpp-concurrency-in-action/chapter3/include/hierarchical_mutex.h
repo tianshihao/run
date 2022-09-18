@@ -1,6 +1,6 @@
 /**
  * @file hierarchical_mutex.h
- * @author tianshihao
+ * @author Tian Shihao (shihao.tian@outlook.com)
  * @brief Listing 3.8 A simple hierarchical mutex
  * @version 0.1
  * @date 2022-09-11

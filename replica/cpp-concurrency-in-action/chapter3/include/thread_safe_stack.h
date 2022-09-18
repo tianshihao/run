@@ -1,12 +1,12 @@
 /**
  * @file thread_safe_stack.h
- * @author your name (you@domain.com)
+ * @author Tian Shihao (shihao.tian@outlook.com)
  * @brief Listing 3.5 A fleshed-out class definition for a thread-safe stack
  * @version 0.1
  * @date 2022-09-11
- *
+ * 
  * @copyright Copyright (c) 2022
- *
+ * 
  */
 
 #pragma once
