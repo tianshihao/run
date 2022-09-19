@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.15.0)
-project(run VERSION 0.1.0)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.15.0)
+PROJECT(run VERSION 0.1.0)
 
 # include(CTest)
 # enable_testing()
+INCLUDE(cmake/utils.cmake)
 
-include(cmake/utils.cmake)
-
-add_subdirectory(replica)
+ADD_SUBDIRECTORY(replica)

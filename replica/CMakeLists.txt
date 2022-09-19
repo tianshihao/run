@@ -1,2 +1,2 @@
-add_subdirectory(cpp-concurrency-in-action)
-add_subdirectory(cpp-primer)
+ADD_SUBDIRECTORY(cpp-concurrency-in-action)
+ADD_SUBDIRECTORY(cpp-primer)
