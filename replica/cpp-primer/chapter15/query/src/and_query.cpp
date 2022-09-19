@@ -1,4 +1,4 @@
-#include "../include/and_query.h"
+#include "and_query.h"
 
 #include <algorithm>
 

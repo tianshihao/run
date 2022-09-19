@@ -3,7 +3,7 @@
 #include <memory>
 #include <set>
 
-#include "./quote.h"
+#include "quote.h"
 
 class Basket {
  public:

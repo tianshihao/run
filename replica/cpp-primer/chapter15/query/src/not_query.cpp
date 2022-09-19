@@ -1,4 +1,4 @@
-#include "../include/not_query.h"
+#include "not_query.h"
 
 QueryResult NotQuery::Eval(TextQuery const& text) const {
   auto result{query.Eval(text)};

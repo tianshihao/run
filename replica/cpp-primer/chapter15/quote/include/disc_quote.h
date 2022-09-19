@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./quote.h"
+#include "quote.h"
 
 /**
  * @brief Class to hold the discount rate and quanlity. Dirived classes will
