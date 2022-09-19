@@ -4,35 +4,35 @@ project(cpp-concurrency-in-action)
 message(STATUS "Configuring cpp-concurrency-in-action...")
 
 # Enable pthread.
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
+FIND_PACKAGE(Threads REQUIRED)
 
-# Find all directory under the currecnt directory.
-SUBDIRLIST(subdirs ${CMAKE_CURRENT_LIST_DIR})
+GET_SUB_DIR_ABS_LIST_RECURSIVELY(${CMAKE_CURRENT_LIST_DIR} SUB_DIR_ABS_LIST)
+FOREACH(IT ${SUB_DIR_ABS_LIST})
+  MESSAGE(STATUS ${IT})
+ENDFOREACH(IT ${SUB_DIR_ABS_LIST})
 
-# Process subdirectory.
-foreach(subdir ${subdirs})
-  message(${subdir})
+GENERATE_TARGET_NAME(${CMAKE_CURRENT_LIST_DIR} "${SUB_DIR_ABS_LIST}" TARGET_NAME_LIST)
+FOREACH(IT ${TARGET_NAME_LIST})
+  MESSAGE(STATUS ${IT})
+ENDFOREACH(IT ${TARGET_NAME_LIST})
 
-  # Set an empty list.
-  set(source_files)
-  # Source file
-  aux_source_directory(${CMAKE_CURRENT_LIST_DIR}/${subdir}/src source_files)
+LIST(LENGTH SUB_DIR_ABS_LIST LENGTH1)
+MATH(EXPR LENGTH2 "${LENGTH1} - 1")
 
-  foreach(source_file ${source_files})
-    message(${source_file})
-  endforeach()
+FOREACH(VAL RANGE ${LENGTH2})
+  LIST(GET SUB_DIR_ABS_LIST ${VAL} SUB_DIR_ABS)
+  LIST(GET TARGET_NAME_LIST ${VAL} TARGET_NAME)
+  MESSAGE(STATUS "${SUB_DIR_ABS}:${TARGET_NAME}")
 
-  set(separator "-")
+  AUX_SOURCE_DIRECTORY(${SUB_DIR_ABS}/src SOURCE_FILES)
+  ADD_EXECUTABLE(${TARGET_NAME} ${SOURCE_FILES})
 
-  set(target_name ${PROJECT_NAME}${separator}${subdir})
+  TARGET_COMPILE_FEATURES(${TARGET_NAME} PRIVATE cxx_std_17)
 
-  # Add executable for every chapter.
-  add_executable(${target_name} ${source_files})
+  # SETTING INCLUDE DIRECTORY AND LINKING.
+  TARGET_INCLUDE_DIRECTORIES(${TARGET_NAME} PUBLIC ${SUB_DIR_ABS}/include)
+  if(CMAKE_THREAD_LIBS_INIT)
+    target_link_libraries(${TARGET_NAME} "${CMAKE_THREAD_LIBS_INIT}")
+  endif()
 
-  target_compile_features(${target_name} PRIVATE cxx_std_17)
-
-  # Setting include directory and linking.
-  target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_LIST_DIR}/${subdir}/include)
-  target_link_libraries(${target_name} PRIVATE Threads::Threads)
-endforeach()
+ENDFOREACH(VAL RANGE ${LENGTH2})
