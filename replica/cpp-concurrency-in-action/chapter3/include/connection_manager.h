@@ -9,6 +9,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#pragma once
 
 #include <mutex>
 #include <vector>
