@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./disc_quote.h"
+#include "disc_quote.h"
 
 class BulkQuote : public DiscQuote {
  public:

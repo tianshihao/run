@@ -1,16 +1,16 @@
 #include <iostream>
 #include <memory>
 
-#include "../include/basket.h"
-#include "../include/bulk_quote.h"
-#include "../include/disc_quote.h"
-#include "../include/quote.h"
+#include "basket.h"
+#include "bulk_quote.h"
+#include "disc_quote.h"
+#include "quote.h"
 
 double PrintTotal(std::ostream&, const Quote, std::size_t);
 
 int main(int argc, char** argv) {
   BulkQuote bq{"Flow my tears, the policeman said", 40.0, 10, 0.2};
-  
+
   Basket bsk;
   bsk.AddItem(std::make_shared<Quote>("Foundation", 30.0));
   bsk.AddItem(std::make_shared<BulkQuote>("Hyperion", 100.0, 3, 0.8));

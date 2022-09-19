@@ -1,4 +1,4 @@
-#include "../include/text_query.h"
+#include "text_query.h"
 
 #include <sstream>
 

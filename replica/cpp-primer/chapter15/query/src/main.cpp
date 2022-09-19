@@ -2,12 +2,12 @@
 #include <iostream>
 #include <string>
 
-#include "../include/and_query.h"
-#include "../include/not_query.h"
-#include "../include/or_query.h"
-#include "../include/query.h"
-#include "../include/query_result.h"
-#include "../include/text_query.h"
+#include "and_query.h"
+#include "not_query.h"
+#include "or_query.h"
+#include "query.h"
+#include "query_result.h"
+#include "text_query.h"
 
 void RunQueries(std::ifstream&);
 std::ostream& Print(std::ostream&, QueryResult const&);

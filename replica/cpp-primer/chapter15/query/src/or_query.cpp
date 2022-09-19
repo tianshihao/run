@@ -1,4 +1,4 @@
-#include "../include/or_query.h"
+#include "or_query.h"
 
 QueryResult OrQuery::Eval(TextQuery const& text) const {
   // Virtual calls through the Query members, lhs and rhs the calls to Eval

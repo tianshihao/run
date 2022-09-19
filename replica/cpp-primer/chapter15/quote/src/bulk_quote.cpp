@@ -1,4 +1,4 @@
-#include "../include/bulk_quote.h"
+#include "bulk_quote.h"
 
 double BulkQuote::NetPrice(std::size_t cnt) const {
   if (cnt >= quantity) {
