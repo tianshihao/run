@@ -62,4 +62,3 @@ class HierarchicalMutex {
 
 thread_local unsigned long HierarchicalMutex::this_thread_hierarchy_value{
     std::numeric_limits<unsigned long>::max()};
-
