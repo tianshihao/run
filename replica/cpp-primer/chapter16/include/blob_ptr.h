@@ -31,6 +31,7 @@ bool operator<(BlobPtr<Type> const &, BlobPtr<Type> const &);
 
 template <typename Type>
 class BlobPtr {
+
   using size_type = typename Blob<Type>::size_type;
 
   // Oprators overloaded and class BlobPtr are one-to-one friend.
