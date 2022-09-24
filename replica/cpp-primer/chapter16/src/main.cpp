@@ -38,7 +38,23 @@ void TestBlob() {
   return;
 }
 
+void TestBlobPtr() {
+  Blob<int> blob;
+
+  for (int i{0}; i < 20; ++i) {
+    blob.PushBack(i);
+    std::cout << i << std::endl;
+  }
+
+  BlobPtr<int> p_blob{blob, 1};
+
+  std::cout << "BlobPtr point to " << *p_blob << std::endl;
+
+  return;
+}
+
 int main(int argc, char** argv) {
-  TestBlob();
+  // TestBlob();
+  TestBlobPtr();
   return 0;
 }
