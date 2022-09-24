@@ -45,6 +45,8 @@ class Blob {
   type const& Back() const;
   type const& operator[](size_type) const;
 
+  std::shared_ptr<std::vector<type>> GetData() const noexcept { return data; }
+
  private:
   std::shared_ptr<std::vector<type>> data;
   void Check(size_type, std::string const&) const;
