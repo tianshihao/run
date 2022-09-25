@@ -119,6 +119,15 @@ MACRO(CONFIGURE_PROJECT PROJECT_NAME PROJECT_CMAKE_LIST_DIR TARGET_LIST)
 
     ADD_EXECUTABLE(${TARGET_NAME} ${SOURCE_FILES})
 
+    IF(MSVC)
+      # warning level 4 and all warnings as errors
+      ADD_COMPILE_OPTIONS(/W4 /WX)
+    ELSE()
+      # lots of warnings and all warnings as errors
+      ADD_COMPILE_OPTIONS(-Wall -Wextra -pedantic -Werror)
+      MESSAGE(STATUS "WARNING OPTIONS: -Wall -Wextra -pedantic -Werror")
+    ENDIF()
+
     TARGET_COMPILE_FEATURES(${TARGET_NAME} PRIVATE cxx_std_17)
 
     # SETTING INCLUDE DIRECTORY AND LINKING.
