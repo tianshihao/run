@@ -7,6 +7,7 @@
 
 #include "blob.h"
 #include "blob_ptr.h"
+#include "screen.h"
 
 /********************************** Ex 16.4 **********************************/
 template <typename Itertor, typename Value>
@@ -53,8 +54,17 @@ void TestBlobPtr() {
   return;
 }
 
+void TestScreen() {
+  Screen<10, 5> scrn{'e'};
+  std::cout << scrn;
+  std::cout << scrn.Get() << std::endl;
+
+  return;
+}
+
 int main(int argc, char** argv) {
   // TestBlob();
-  TestBlobPtr();
+  // TestBlobPtr();
+  TestScreen();
   return 0;
 }
