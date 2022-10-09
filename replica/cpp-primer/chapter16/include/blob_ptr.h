@@ -1,9 +1,9 @@
-/**
+﻿/**
  * @file blob_ptr.h
- * @author Tian Shihao (shihao.tian@outlook.com)
+ * @author Shihao Tian (shihao.tian@outlook.com)
  * @brief Ex 16.12
- * @version 0.1
- * @date 2022-09-21
+ * @version 0.2
+ * @date 2022-10-09
  *
  * @copyright Copyright (c) 2022
  *
@@ -17,33 +17,46 @@
 
 #include "blob.h"
 
-template<typename Type>
+template <typename T>
 class Blob;
-
 template <typename>
 class BlobPtr;
 
-template <typename Type>
-bool operator==(BlobPtr<Type> const &, BlobPtr<Type> const &);
+template <typename T>
+bool operator==(BlobPtr<T> const &, BlobPtr<T> const &);
+template <typename T>
+bool operator!=(BlobPtr<T> const &, BlobPtr<T> const &);
+template <typename T>
+bool operator<(BlobPtr<T> const &, BlobPtr<T> const &);
+template <typename T>
+bool operator>(BlobPtr<T> const &, BlobPtr<T> const &);
+template <typename T>
+bool operator<=(BlobPtr<T> const &, BlobPtr<T> const &);
+template <typename T>
+bool operator>=(BlobPtr<T> const &, BlobPtr<T> const &);
 
-template <typename Type>
-bool operator<(BlobPtr<Type> const &, BlobPtr<Type> const &);
-
-template <typename Type>
+template <typename T>
 class BlobPtr {
-
-  using size_type = typename Blob<Type>::size_type;
-
-  // Oprators overloaded and class BlobPtr are one-to-one friend.
-  friend bool operator==<Type>(const BlobPtr<Type> &, const BlobPtr<Type> &);
-  friend bool operator< <Type>(const BlobPtr<Type> &, const BlobPtr<Type> &);
-
  public:
-  BlobPtr() noexcept : curr{0} {}
-  BlobPtr(Blob<Type> &blob, size_type sz = 0) noexcept
-      : wptr{blob.GetData()}, curr{sz} {}
+  using size_type = typename Blob<T>::size_type;
 
-  Type &operator*() const {
+  BlobPtr() noexcept;
+  BlobPtr(Blob<T> &blob, size_type sz = 0) noexcept;
+
+  /********************************* Friends *********************************/
+
+  friend bool operator==<T>(const BlobPtr<T> &, const BlobPtr<T> &);
+  friend bool operator!=<T>(const BlobPtr<T> &, const BlobPtr<T> &);
+  // clang-format off
+  friend bool operator< <T>(const BlobPtr<T> &, const BlobPtr<T> &);
+  // clang-format on
+  friend bool operator><T>(const BlobPtr<T> &, const BlobPtr<T> &);
+  friend bool operator<=<T>(const BlobPtr<T> &, const BlobPtr<T> &);
+  friend bool operator>=<T>(const BlobPtr<T> &, const BlobPtr<T> &);
+
+  /******************************* Data members *******************************/
+
+  T &operator*() const {
     auto p{Check(curr, "Dereference past end.")};
     return (*p)[curr];
   }
@@ -54,64 +67,119 @@ class BlobPtr {
   BlobPtr operator++(int);
   BlobPtr operator--(int);
 
+  BlobPtr &operator+=(size_type);
+  BlobPtr &operator-=(size_type);
+
  private:
-  std::weak_ptr<std::vector<Type>> wptr;
+  std::weak_ptr<std::vector<T>> wptr;
   size_type curr;
-  std::shared_ptr<std::vector<Type>> Check(size_type,
-                                           std::string const &) const;
+  std::shared_ptr<std::vector<T>> Check(size_type, std::string const &) const;
 };
 
-template <typename Type>
-inline BlobPtr<Type> &BlobPtr<Type>::operator++() {
-  Check(curr, "Increment past end of BlobPtr");
+template <typename T>
+BlobPtr<T>::BlobPtr() noexcept : curr{0} {}
+
+template <typename T>
+BlobPtr<T>::BlobPtr(Blob<T> &blob, size_type sz) noexcept
+    : wptr(blob.GetData()), curr(sz) {}
+
+template <typename T>
+inline bool operator==(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return lhs.curr == rhs.curr;
+}
+
+template <typename T>
+inline bool operator!=(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return !(lhs.curr == rhs.curr);
+}
+
+template <typename T>
+inline bool operator<(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return lhs.curr < rhs.curr;
+}
+
+template <typename T>
+inline bool operator>(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return !(lhs.curr < rhs.curr);
+}
+
+template <typename T>
+inline bool operator<=(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return !(lhs.curr > rhs.curr);
+}
+
+template <typename T>
+inline bool operator>=(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
+  if (lhs.wptr.lock() != rhs.wptr.lock()) {
+    throw std::runtime_error("pointers to same Blobs!");
+  }
+  return !(lhs.curr < rhs.curr);
+}
+
+template <typename T>
+inline BlobPtr<T> &BlobPtr<T>::operator++() {
+  Check(curr, "increment past end of BlobPtr");
   ++curr;
   return *this;
 }
 
-template <typename Type>
-inline BlobPtr<Type> &BlobPtr<Type>::operator--() {
+template <typename T>
+inline BlobPtr<T> &BlobPtr<T>::operator--() {
   --curr;
   Check(curr, "Decrement past begin of BlobPtr");
 
   return *this;
 }
 
-template <typename Type>
-inline BlobPtr<Type> BlobPtr<Type>::operator++(int) {
-  BlobPtr<Type> ret{*this};
+template <typename T>
+inline BlobPtr<T> BlobPtr<T>::operator++(int) {
+  BlobPtr<T> ret{*this};
   ++(*this);
   return ret;
 }
 
-template <typename Type>
-inline BlobPtr<Type> BlobPtr<Type>::operator--(int) {
-  BlobPtr<Type> ret{*this};
+template <typename T>
+inline BlobPtr<T> BlobPtr<T>::operator--(int) {
+  BlobPtr<T> ret{*this};
   --(*this);
   return ret;
 }
 
-template <typename Type>
-inline bool operator==(const BlobPtr<Type> &lhs, const BlobPtr<Type> &rhs) {
-  if (lhs.wptr.lock() != rhs.wptr.lock()) {
-    throw std::runtime_error("Pointers to difference Blobs!");
-  }
-  return lhs.curr == rhs.curr;
+template <typename T>
+inline BlobPtr<T> &BlobPtr<T>::operator+=(size_type i) {
+  curr += i;
+  Check(curr, "increment past end of BlobPtr");
+  return *this;
 }
 
-template <typename Type>
-inline bool operator<(const BlobPtr<Type> &lhs, const BlobPtr<Type> &rhs) {
-  if (lhs.wptr.lock() != rhs.wptr.lock()) {
-    throw std::runtime_error("Pointers to difference Blobs!");
-  }
-  return lhs.curr < rhs.curr;
+template <typename T>
+inline BlobPtr<T> &BlobPtr<T>::operator-=(size_type i) {
+  curr -= i;
+  Check(curr, "decrement past end of BlobPtr");
+  return *this;
 }
 
-template <typename Type>
-std::shared_ptr<std::vector<Type>> BlobPtr<Type>::Check(
+template <typename T>
+std::shared_ptr<std::vector<T>> BlobPtr<T>::Check(
     size_type i, std::string const &msg) const {
   auto ret{wptr.lock()};
   if (nullptr == ret) {
-    throw std::runtime_error("Unbound Blob<Type>Ptr.");
+    throw std::runtime_error("unbound BlobPtr.");
   }
   if (i >= ret->size()) {
     throw std::out_of_range(msg);
