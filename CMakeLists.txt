@@ -6,3 +6,4 @@ PROJECT(run VERSION 0.1.0)
 INCLUDE(cmake/utils.cmake)
 
 ADD_SUBDIRECTORY(replica)
+ADD_SUBDIRECTORY(utils)
