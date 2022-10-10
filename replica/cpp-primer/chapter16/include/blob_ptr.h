@@ -56,10 +56,7 @@ class BlobPtr {
 
   /******************************* Data members *******************************/
 
-  T &operator*() const {
-    auto p{Check(curr, "Dereference past end.")};
-    return (*p)[curr];
-  }
+  T &operator*() const;
 
   BlobPtr &operator++();
   BlobPtr &operator--();
@@ -129,6 +126,12 @@ inline bool operator>=(const BlobPtr<T> &lhs, const BlobPtr<T> &rhs) {
     throw std::runtime_error("pointers to same Blobs!");
   }
   return !(lhs.curr < rhs.curr);
+}
+
+template <typename T>
+inline T &BlobPtr<T>::operator*() const {
+  auto p{Check(curr, "dereference past end.")};
+  return (*p)[curr];
 }
 
 template <typename T>

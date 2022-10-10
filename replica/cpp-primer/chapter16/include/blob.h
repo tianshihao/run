@@ -19,9 +19,15 @@
 #include <utility>
 #include <vector>
 
-// Forward declaration.
+#include "blob_ptr.h"
+
+/// @todo mark on book, explain why here do not need T after typename, cause T
+/// is not used in forward declaration.
+/// Forward declaration.
 template <typename>
 class Blob;
+template <typename>
+class BlobPtr;
 
 template <typename type>
 bool operator==(Blob<type> const&, Blob<type> const&);
@@ -82,6 +88,9 @@ class Blob {
 
   type& operator[](size_type);
   type const& operator[](size_type) const;
+
+  BlobPtr<type> Begin();
+  BlobPtr<type> End();
 
   std::shared_ptr<std::vector<type>> GetData() const noexcept { return data; }
 
@@ -207,6 +216,16 @@ template <typename type>
 inline type const& Blob<type>::operator[](size_type i) const {
   Check(i, "Subscript out of range");
   return (*data)[i];
+}
+
+template <typename type>
+inline BlobPtr<type> Blob<type>::Begin() {
+  return BlobPtr<type>{*this};
+}
+
+template <typename type>
+inline BlobPtr<type> Blob<type>::End() {
+  return BlobPtr<type>{*this, data->size() - 1};
 }
 
 template <typename type>

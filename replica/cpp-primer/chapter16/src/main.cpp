@@ -47,6 +47,11 @@ void TestBlob() {
   chunk.PushBack(66);
   std::cout << chunk;
 
+  std::cout << "get first element via BlobPtr:\n";
+  std::cout << *(chunk.Begin()) << std::endl;
+  std::cout << "get last element via BlobPtr:\n";
+  std::cout << *(chunk.End()) << std::endl;
+
   return;
 }
 
@@ -78,8 +83,8 @@ void TestScreen() {
 }
 
 int main(int argc, char **argv) {
-  // TestBlob();
-  TestBlobPtr();
+  TestBlob();
+  // TestBlobPtr();
   // TestScreen();
   return 0;
 }
