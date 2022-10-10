@@ -4,14 +4,14 @@
  * @brief Examples
  * @version 0.1
  * @date 2022-10-10
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 #pragma once
 
-typedef int (*fn)(int argc, char** argv);
+using fn = int (*)(int, char**);
 
-extern int TestBlob(int argc, char** argv);
-extern int TestBlobPtr(int argc, char** argv);
-extern int TestScreen(int argc, char** argv);
+int TestBlob(int, char**);
+int TestBlobPtr(int, char**);
+int TestScreen(int, char**);
