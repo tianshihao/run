@@ -23,6 +23,7 @@ int PrintUsage() {
                "valgrind --leak-check=full"
                " --show-leak-kinds=all example [command] [subcommand]  "
             << std::endl;
+
   return 0;
 }
 }  // namespace utils
