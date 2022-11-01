@@ -100,7 +100,7 @@
     "workbench.editor.showTabs": true,
     "workbench.editor.titleScrollbarSizing": "large",
     "vim.showMarksInGutter": true,
-    "window.zoomLevel": 5,
+    "window.zoomLevel": 2,
     "[cpp]": {
       "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
