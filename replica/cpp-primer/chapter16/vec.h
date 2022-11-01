@@ -182,7 +182,7 @@ void Vec<T>::Resize(std::size_t sz, T const& s) {
   } else if (sz < Size()) {
     // Destory the rear data but do not free memory.
     while (rear != head + sz) {
-      alloc.destory(--rear);
+      alloc.destroy(--rear);
     }
   } else {
   }
@@ -199,7 +199,7 @@ std::pair<T*, T*> Vec<T>::AllocNCopy(T const* b, T const* e) {
 template <typename T>
 void Vec<T>::Free() noexcept {
   if (head) {
-    std::for_each(head, rear, [this](T& rhs) { alloc.destory(&rhs); });
+    std::for_each(head, rear, [this](T& rhs) { alloc.destroy(&rhs); });
     alloc.deallocate(head, boundary - head);
   }
 
