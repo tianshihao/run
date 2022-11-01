@@ -1,9 +1,9 @@
 /**
  * @file blob.h
  * @author Shihao Tian (shihao.tian@outlook.com)
- * @brief Ex 16.12
- * @version 0.2
- * @date 2022-10-09
+ * @brief Ex 16.12 16.24
+ * @version 0.3
+ * @date 2022-11-01
  *
  * @copyright Copyright (c) 2022
  *
@@ -59,6 +59,12 @@ class Blob {
 
   Blob(Blob<type>&&) noexcept;
   Blob& operator=(Blob<type>&&) noexcept;
+
+  // TODO, could move it outside the class definition?
+  template <typename It>
+  Blob(It b, It e) noexcept : data(std::make_shared<std::vector<type>>(b, e)) {
+    return;
+  }
 
   /********************************* Friends *********************************/
 
