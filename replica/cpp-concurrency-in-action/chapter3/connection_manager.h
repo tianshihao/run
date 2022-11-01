@@ -18,14 +18,12 @@ class DataPacket {
   std::vector<int> data;
 };
 
-class ConnectionInfo {
-  int info;
-};
+class ConnectionInfo {};
 
 class ConnectionHandle {
  public:
   ConnectionHandle Open(ConnectionInfo const &) { return ConnectionHandle(); }
-  void SendData(DataPacket const &data) {}
+  void SendData(DataPacket const &) {}
   DataPacket ReceiveData() { return DataPacket(); }
 };
 

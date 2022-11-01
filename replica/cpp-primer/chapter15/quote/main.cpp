@@ -8,7 +8,7 @@
 
 double PrintTotal(std::ostream&, const Quote, std::size_t);
 
-int main(int argc, char** argv) {
+int main() {
   BulkQuote bq{"Flow my tears, the policeman said", 40.0, 10, 0.2};
 
   Basket bsk;

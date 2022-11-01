@@ -16,7 +16,7 @@ inline Query operator&(Query const&, Query const&);
 inline Query operator|(Query const&, Query const&);
 inline Query operator~(Query const&);
 
-int main(int argc, char** argv) {
+int main() {
   std::ifstream ifs{"example.txt"};
   RunQueries(ifs);
 
