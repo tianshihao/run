@@ -187,7 +187,8 @@
       {
         "label": "test",
         "type": "shell",
-        "command": "${command:cmake.launchTargetPath}",
+        // "command": "${command:cmake.launchTargetPath}",
+        "command": "${command:cmake.ctest}",
         "args": [],
         "group": {
           "kind": "test",

@@ -3,6 +3,7 @@
  * @author tianshihao4944@outlook.com
  * @brief Inspired by
  * https://medium.com/analytics-vidhya/c-shared-ptr-and-how-to-write-your-own-d0d385c118ad
+ * and just for interview.
  * @version 0.1
  * @date 2022-08-18
  *
