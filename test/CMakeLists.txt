@@ -1,5 +1,4 @@
 # Prepare for gtest.
-enable_testing()
 include(GoogleTest)
 
 set(TESTS_NAME_LIST
@@ -8,6 +7,7 @@ set(TESTS_NAME_LIST
   find_test
   screen_test
   vec_test
+  shared_ptr_test
 )
 
 foreach(TEST_NAME ${TESTS_NAME_LIST})

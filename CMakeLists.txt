@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15.0)
 PROJECT(run VERSION 0.1.0)
 
+enable_testing()
+
 INCLUDE(cmake/utils.cmake)
 INCLUDE(cmake/gtest.cmake)
 
