@@ -6,8 +6,9 @@ set(TESTS_NAME_LIST
   blob_test
   find_test
   screen_test
-  vec_test
   shared_ptr_test
+  unique_ptr_test
+  vec_test
 )
 
 foreach(TEST_NAME ${TESTS_NAME_LIST})
