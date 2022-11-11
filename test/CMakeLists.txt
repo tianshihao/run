@@ -9,6 +9,7 @@ set(TESTS_NAME_LIST
   shared_ptr_test
   unique_ptr_test
   vec_test
+  factory_method_test
 )
 
 foreach(TEST_NAME ${TESTS_NAME_LIST})

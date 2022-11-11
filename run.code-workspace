@@ -110,11 +110,11 @@
     "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
     "C_Cpp.intelliSenseEngine": "Disabled",
     // "clangd.arguments": [
-      // "--background-index",
-      // "--completion-style=bundled",
-      // "--compile-commands-dir=${workspaceFolder}/build",
-      // "--pretty",
-      // "--header-insertion=iwyu"
+    // "--background-index",
+    // "--completion-style=bundled",
+    // "--compile-commands-dir=${workspaceFolder}/build",
+    // "--pretty",
+    // "--header-insertion=iwyu"
     // ],
     "clangd.restartAfterCrash": true,
     "editor.tabSize": 2,
