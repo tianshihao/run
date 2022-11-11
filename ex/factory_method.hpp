@@ -1,7 +1,21 @@
+/**
+ * @file factory_method.hpp
+ * @author Shihao Tian (shihao.tian@outlook.com)
+ * @brief
+ * @version 0.1
+ * @date 2022-11-11
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include <string>
+
+#include "utils/lazy_macro.h"
 
 // Abstract product, For example, the vehicle.
 class Product {
@@ -9,13 +23,8 @@ class Product {
   Product() noexcept = default;
   Product(int id) noexcept : _id(id){};
 
-  // And according to our real life, a thing or object can not be copied or
-  // moved.
-  Product(Product const&) = delete;
-  Product& operator=(Product const&) = delete;
-
-  Product(Product&&) = delete;
-  Product& operator=(Product&&) = delete;
+  DECLARE_CLASS_COPY_DEFAULT(Product)
+  DECLARE_CLASS_MOVE_DEFAULT(Product)
 
   virtual ~Product() noexcept = default;
 
@@ -56,22 +65,22 @@ class Factory {
   Factory() noexcept = default;
 
   // Same reason with product.
-  Factory(Factory const&) = delete;
-  Factory& operator=(Factory const&) = delete;
-
-  Factory(Factory&&) = delete;
-  Factory& operator=(Factory&&) = delete;
+  DECLARE_CLASS_COPY_DEFAULT(Factory)
+  DECLARE_CLASS_MOVE_DEFAULT(Factory)
 
   virtual ~Factory() noexcept = default;
 
   // Some business.
-  void Produce() {
-    Product* product{GetProduct()};
+  std::unique_ptr<Product> Produce() {
+    std::unique_ptr<Product> product{GetProduct()};
     std::cout << product->ProductInfo();
+
+    return product;
   }
 
  private:
-  virtual Product* GetProduct(int id = 0) = 0;
+  virtual std::unique_ptr<Product> GetProduct(int id = 0) = 0;
+  // inferface process data
 };
 
 class FactoryA : public Factory {
@@ -79,7 +88,10 @@ class FactoryA : public Factory {
   FactoryA() noexcept = default;
   ~FactoryA() noexcept override = default;
 
-  Product* GetProduct(int id = 0) override { return new ProductA(id); }
+ private:
+  std::unique_ptr<Product> GetProduct(int id = 0) override {
+    return std::unique_ptr<ProductA>(new ProductA(id));
+  }
 };
 
 class FactoryB : public Factory {
@@ -87,5 +99,8 @@ class FactoryB : public Factory {
   FactoryB() noexcept = default;
   ~FactoryB() noexcept override = default;
 
-  Product* GetProduct(int id = 0) override { return new ProductB(id); }
+ private:
+  std::unique_ptr<Product> GetProduct(int id = 0) override {
+    return std::unique_ptr<ProductB>(new ProductB(id));
+  }
 };

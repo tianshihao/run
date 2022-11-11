@@ -10,6 +10,7 @@ set(TESTS_NAME_LIST
   unique_ptr_test
   vec_test
   factory_method_test
+  producer_consumer_test
 )
 
 foreach(TEST_NAME ${TESTS_NAME_LIST})

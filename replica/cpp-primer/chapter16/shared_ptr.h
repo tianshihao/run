@@ -31,7 +31,10 @@ class SharedPtr {
   SharedPtr& operator=(SharedPtr const&) noexcept;
   SharedPtr(SharedPtr&&) noexcept;
   SharedPtr& operator=(SharedPtr&&) noexcept;
+  SharedPtr& operator=(std::nullptr_t) noexcept;
   ~SharedPtr() noexcept;
+
+  bool operator==(std::nullptr_t) noexcept;
 
   Type* Get() noexcept;
   std::size_t RefCnt() noexcept;
@@ -95,6 +98,21 @@ SharedPtr<Type>& SharedPtr<Type>::operator=(
   dying_obj._ptr = dying_obj._rc = nullptr;
 
   return *this;
+}
+
+template <typename Type>
+SharedPtr<Type>& SharedPtr<Type>::operator=(std::nullptr_t) noexcept {
+  Release();
+
+  _ptr = nullptr;
+  _cb = nullptr;
+
+  return *this;
+}
+
+template <typename Type>
+bool SharedPtr<Type>::operator==(std::nullptr_t) noexcept {
+  return nullptr = _ptr;
 }
 
 template <typename Type>

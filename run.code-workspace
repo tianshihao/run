@@ -97,10 +97,11 @@
       "stack": "cpp"
     },
     "window.title": "🏃‍♂️💨",
+    "workbench.sideBar.location": "right",
     "workbench.editor.showTabs": true,
     "workbench.editor.titleScrollbarSizing": "large",
     "vim.showMarksInGutter": true,
-    "window.zoomLevel": 2,
+    "window.zoomLevel": 3,
     "[cpp]": {
       "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },

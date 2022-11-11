@@ -40,6 +40,8 @@ class UniquePtr {
     return *this;
   }
 
+  bool operator==(std::nullptr_t) noexcept { return nullptr == _ptr; }
+
   void Swap(UniquePtr<Type>& other) noexcept {
     std::swap(_ptr, other._ptr);
     return;
