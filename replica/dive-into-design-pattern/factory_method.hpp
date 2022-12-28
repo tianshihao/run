@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <iostream>
 #include <string>
 
@@ -64,14 +65,21 @@ class Factory {
 
   virtual ~Factory() noexcept = default;
 
-  // Some business.
+  // Note, despite its name, product creation is not the primary
+  // responsibility of the creator. Usually, the creator class already
+  // has some core business logic related to products. The factory
+  // method helps to decouple this logic from the concrete prod-
+  // uct classes. Here is an analogy: a large software development
+  // company can have a training department for programmers.
+  // However, the primary function of the company as a whole is
+  // still writing code, not producing programmers.
   void Produce() {
     Product* product{GetProduct()};
     std::cout << product->ProductInfo();
   }
 
  private:
-  virtual Product* GetProduct(int id = 0) = 0;
+  virtual Product* GetProduct() = 0;
 };
 
 class FactoryA : public Factory {
@@ -79,13 +87,21 @@ class FactoryA : public Factory {
   FactoryA() noexcept = default;
   ~FactoryA() noexcept override = default;
 
-  Product* GetProduct(int id = 0) override { return new ProductA(id); }
+ private:
+  Product* GetProduct() override { return new ProductA(_id++); }
+  std::uint32_t static _id;
 };
+
+std::uint32_t FactoryA::_id{1};
 
 class FactoryB : public Factory {
  public:
   FactoryB() noexcept = default;
   ~FactoryB() noexcept override = default;
 
-  Product* GetProduct(int id = 0) override { return new ProductB(id); }
+ private:
+  Product* GetProduct() override { return new ProductB(_id++); }
+  std::uint32_t static _id;
 };
+
+std::uint32_t FactoryB::_id{1};
