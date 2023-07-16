@@ -8,4 +8,6 @@ foreach(SRC_FILE ${SRC_FILES})
     add_executable(${EXEC_NAME} ${SRC_FILE})
     # Link the executable with the library.
     target_link_libraries(${EXEC_NAME} ${LIB_NAME})
+    # Set target CXX Standard C++17.
+    target_compile_features(${EXEC_NAME} PRIVATE cxx_std_17)
 endforeach(SRC_FILE ${SRC_FILES})
