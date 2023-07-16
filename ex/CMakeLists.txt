@@ -46,16 +46,22 @@ foreach(subdir ${subdirs_to_process})
         list(APPEND files_absolute_paths ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/${file})
     endforeach()
 
-    # Print the files_absolute_paths.
-    message(STATUS "Files in ${subdir}: ${files_absolute_paths}")
-
     # Create a shared library target for the subdirectory using files. The name
     # of the library is "ex_" plus the name of the subdirectory.
     add_library(ex_${subdir} SHARED ${files_absolute_paths})
 
+    # Set library's language to C++.
+    set_target_properties(ex_${subdir} PROPERTIES LINKER_LANGUAGE CXX)
+
+    # Set files_absolute_paths to empty.
+    set(files_absolute_paths "")
+
     # Then create an executable target for the subdirectory using main.cpp. The
     # name of the executable is "ex_" plus the name of the subdirectory.
     add_executable(ex_${subdir}_sample ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/main.cpp)
+
+    # Set executable's language to C++.
+    set_target_properties(ex_${subdir}_sample PROPERTIES LINKER_LANGUAGE CXX)
 
     # Link the executable target to the shared library target.
     target_link_libraries(ex_${subdir}_sample ex_${subdir})
