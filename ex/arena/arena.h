@@ -11,8 +11,7 @@
 #include <memory>
 #include <vector>
 
-#include "macros.h"
-// #include "cuda_runtime.h"
+namespace ex::arena {
 
 enum class MemoryType { DEVICE_MEMORY = 0, PINNED_MEMORY = 1, HOST_MEMORY = 2 };
 
@@ -81,3 +80,5 @@ T* Arena::allocate(size_t num) {
   }
   return static_cast<T*>(blocks_.back()->allocate(bytes));
 }
+
+}  // namespace ex::arena

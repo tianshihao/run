@@ -1,4 +1,5 @@
 #include "arena.h"
+namespace ex::arena {
 
 size_t Arena::_calculate_allocating_bytes(size_t bytes) const {
   // 2^N size near requested bytes
@@ -19,7 +20,9 @@ size_t Arena::_calculate_allocating_bytes(size_t bytes) const {
 }
 
 void Arena::reserve(size_t bytes) {
-  QUIT_IF_VOID_QUIET(_has_capacity(bytes));
+  if (!_has_capacity(bytes)) {
+    return;
+  }
   // pop back empty but small blocks
   while (!blocks_.empty() && blocks_.back()->size() == 0) {
     capacity_ -= blocks_.back()->size();
@@ -33,7 +36,9 @@ void Arena::reserve(size_t bytes) {
 
 // leave only 1 block
 void Arena::reset() {
-  QUIT_IF_VOID_QUIET(blocks_.empty());
+  if (blocks_.empty()) {
+    return;
+  }
   while (blocks_.size() > 1) {
     capacity_ -= blocks_.back()->capacity();
     blocks_.pop_back();
@@ -100,3 +105,5 @@ size_t Arena::Block::_padding_bytes(size_t bytes) const {
   int padding = (remainder == 0 ? 0 : alignment - remainder);
   return padding;
 }
+
+}  // namespace ex::arena
