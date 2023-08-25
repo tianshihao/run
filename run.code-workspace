@@ -112,7 +112,7 @@
     "workbench.editor.showTabs": true,
     "workbench.editor.titleScrollbarSizing": "large",
     "vim.showMarksInGutter": true,
-    "window.zoomLevel": 3,
+    "window.zoomLevel": 1,
     "[cpp]": {
       "editor.defaultFormatter": "ms-vscode.cpptools"
     },
@@ -143,17 +143,11 @@
       "sdras.night-owl",
       "vscodevim.vim",
       "ms-vscode.cpptools",
-      "albert.tabout",
-      "eamodio.gitlens",
       "josetr.cmake-language-support-vscode",
-      "LeetCode.vscode-leetcode",
-      "miguelsolorio.fluent-icons",
+      "leetcode.vscode-leetcode",
       "ms-vscode.cmake-tools",
-      "ms-vscode.cpptools",
-      "pkief.material-icon-theme",
-      "sdras.night-owl",
       "twxs.cmake",
-      "vscodevim.vim",
+      "llvm-vs-code-extensions.vscode-clangd"
     ]
   },
   "launch": {
