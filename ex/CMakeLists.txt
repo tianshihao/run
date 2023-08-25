@@ -1,3 +1,5 @@
+find_package (glog 0.7.0 REQUIRED)
+
 # Get names of all subdirectories. In CMake language.
 file(GLOB subdirs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
 
@@ -48,23 +50,25 @@ foreach(subdir ${subdirs_to_process})
 
     # Create a shared library target for the subdirectory using files. The name
     # of the library is "ex_" plus the name of the subdirectory.
-    add_library(ex_${subdir} SHARED ${files_absolute_paths})
+    set(EX_LIB_NAME ex_${subdir})
+    add_library(${EX_LIB_NAME} SHARED ${files_absolute_paths})
 
     # Set library's language to C++.
-    set_target_properties(ex_${subdir} PROPERTIES LINKER_LANGUAGE CXX)
+    set_target_properties(${EX_LIB_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
     # Set files_absolute_paths to empty.
     set(files_absolute_paths "")
 
     # Then create an executable target for the subdirectory using main.cpp. The
     # name of the executable is "ex_" plus the name of the subdirectory.
-    add_executable(ex_${subdir}_sample ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/main.cpp)
+    set(EX_EXEC_NAME ex_${subdir}_sample)
+    add_executable(${EX_EXEC_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/main.cpp)
 
     # Set executable's language to C++.
-    set_target_properties(ex_${subdir}_sample PROPERTIES LINKER_LANGUAGE CXX)
+    set_target_properties(${EX_EXEC_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
     # Link the executable target to the shared library target.
-    target_link_libraries(ex_${subdir}_sample ex_${subdir})
+    target_link_libraries(${EX_EXEC_NAME} ${EX_LIB_NAME} glog::glog)
 
 endforeach()
 
