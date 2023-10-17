@@ -20,9 +20,9 @@ void InsightService::StopTiming(std::string const& category,
                                 FrameId frame_id) {
   std::lock_guard<std::mutex> lock(mutex_timing_);
 
-  auto stop_time = NowMilliseconds();
-  auto start_time = timing_map_[category][subcategory][frame_id].start;
-  auto elapsed_time = stop_time - start_time;
+  auto stop_time{NowMilliseconds()};
+  auto start_time{timing_map_[category][subcategory][frame_id].start};
+  auto elapsed_time{stop_time - start_time};
 
   timing_map_[category][subcategory][frame_id].elapsed = elapsed_time;
 
@@ -42,9 +42,9 @@ void InsightService::StopTiming(std::string const& category,
                                 FrameId frame_id, Milliseconds stop) {
   std::lock_guard<std::mutex> lock(mutex_timing_);
 
-  auto stop_time = stop;
-  auto start_time = timing_map_[category][subcategory][frame_id].start;
-  auto elapsed_time = stop_time - start_time;
+  auto stop_time{stop};
+  auto start_time{timing_map_[category][subcategory][frame_id].start};
+  auto elapsed_time{stop_time - start_time};
 
   timing_map_[category][subcategory][frame_id].elapsed = elapsed_time;
 
@@ -56,6 +56,7 @@ void InsightService::LogTiming(std::string const& key,
                                FrameId frame_id) {
   using CallbackTimingRecord = std::map<std::string, TimingRecord>;
   using NodeTimingRecord = std::map<std::string, CallbackTimingRecord>;
+
   NodeTimingRecord selected_node_timing_record;
 
   auto specific_frame_timing_selecter{
