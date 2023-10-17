@@ -21,25 +21,25 @@ using Nanoseconds = int64_t;
 /// @brief convert seconds to nanoseconds
 /// @param sec seconds
 /// @return nanoseconds
-Nanoseconds SecondsToNanoseconds(Nanoseconds const sec) noexcept {
+static Nanoseconds SecondsToNanoseconds(Nanoseconds const sec) noexcept {
   return sec * 1000000000;
 }
 
 /// @brief sleep for milliseconds(ms)
 /// @param ms milliseconds(ms) to sleep
-void SleepForMilliseconds(Milliseconds const ms) noexcept {
+static void SleepForMilliseconds(Milliseconds const ms) noexcept {
   std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
 
 /// @brief sleep for microseconds(µs)
 /// @param us microseconds(µs) to sleep
-void SleepForMicroseconds(Microseconds const us) noexcept {
+static void SleepForMicroseconds(Microseconds const us) noexcept {
   std::this_thread::sleep_for(std::chrono::microseconds(us));
 }
 
 /// @brief get current timestamp in seconds
 /// @return timestamp in seconds
-Seconds NowSeconds() noexcept {
+static Seconds NowSeconds() noexcept {
   return std::chrono::duration_cast<std::chrono::seconds>(
              std::chrono::system_clock::now().time_since_epoch())
       .count();
@@ -47,7 +47,7 @@ Seconds NowSeconds() noexcept {
 
 /// @brief get current timestamp in milliseconds(ms)
 /// @return timestamp in milliseconds(ms)
-Milliseconds NowMilliseconds() noexcept {
+static Milliseconds NowMilliseconds() noexcept {
   return std::chrono::duration_cast<std::chrono::milliseconds>(
              std::chrono::system_clock::now().time_since_epoch())
       .count();
@@ -55,7 +55,7 @@ Milliseconds NowMilliseconds() noexcept {
 
 /// @brief get current timestamp in microseconds(µs)
 /// @return timestamp in microseconds(µs)
-Microseconds NowMicroseconds() noexcept {
+static Microseconds NowMicroseconds() noexcept {
   return std::chrono::duration_cast<std::chrono::microseconds>(
              std::chrono::system_clock::now().time_since_epoch())
       .count();
@@ -63,7 +63,7 @@ Microseconds NowMicroseconds() noexcept {
 
 /// @brief get current timestamp in nanoseconds(ns)
 /// @return timestamp in nanoseconds(ns)
-Nanoseconds NowNanoseconds() noexcept {
+static Nanoseconds NowNanoseconds() noexcept {
   return std::chrono::duration_cast<std::chrono::nanoseconds>(
              std::chrono::system_clock::now().time_since_epoch())
       .count();
