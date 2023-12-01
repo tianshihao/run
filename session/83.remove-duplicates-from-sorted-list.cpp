@@ -6,11 +6,11 @@
  * https://leetcode.cn/problems/remove-duplicates-from-sorted-list/description/
  *
  * algorithms
- * Easy (53.51%)
- * Likes:    825
+ * Easy (53.22%)
+ * Likes:    1076
  * Dislikes: 0
- * Total Accepted:    458.9K
- * Total Submissions: 857.5K
+ * Total Accepted:    636.6K
+ * Total Submissions: 1.2M
  * Testcase Example:  '[1,1,2]'
  *
  * Given the head of a sorted linked list, delete all duplicates such that each
@@ -54,22 +54,20 @@
 class Solution {
  public:
   ListNode* deleteDuplicates(ListNode* head) {
-    if (nullptr == head) {
-      return nullptr;
-    }
-    ListNode* p{head};
-    ListNode* q{head->next};
-    while (q) {
-      if (p->val == q->val) {
-        ListNode* tmp{q->next};
-        p->next = tmp;
-        // delete q;
-        q = tmp;
+    auto p{head};
+
+    while (nullptr != p) {
+      if (nullptr != p->next) {
+        if (p->val == p->next->val) {
+          p->next = p->next->next;
+        } else {
+          p = p->next;
+        }
       } else {
-        q = q->next;
         p = p->next;
       }
     }
+
     return head;
   }
 };

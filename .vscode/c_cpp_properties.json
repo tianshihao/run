@@ -10,6 +10,17 @@
                 "UNICODE",
                 "_UNICODE"
             ]
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "cppStandard": "c++17",
+            "cStandard": "c17"
         }
     ],
     "version": 4

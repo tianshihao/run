@@ -6,11 +6,11 @@
  * https://leetcode.cn/problems/two-sum/description/
  *
  * algorithms
- * Easy (52.70%)
- * Likes:    14860
+ * Easy (53.07%)
+ * Likes:    18036
  * Dislikes: 0
- * Total Accepted:    3.6M
- * Total Submissions: 6.8M
+ * Total Accepted:    5M
+ * Total Submissions: 9.4M
  * Testcase Example:  '[2,7,11,15]\n9'
  *
  * Given an array of integers nums and an integer target, return indices of the
@@ -55,26 +55,26 @@
  *
  *
  *
- * Follow-up: Can you come up with an algorithm that is less than O(n^2) time
+ * Follow-up: Can you come up with an algorithm that is less than O(n^2) time
  * complexity?
  */
 
-#include <bits/stdc++.h>
-
+// @lc code=start
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
-// @lc code=start
 class Solution {
  public:
   vector<int> twoSum(vector<int>& nums, int target) {
-    for (size_t i{0}; i < nums.size(); ++i) {
-      for (size_t j{i + 1}; j < nums.size(); ++j) {
-        if (nums[i] + nums[j] == target) {
-          return {static_cast<int>(i), static_cast<int>(j)};
-        }
+    // [value, index]
+    std::unordered_map<int, int> indices;
+    for (int i{0}; i < nums.size(); ++i) {
+      if (indices.find(target - nums[i]) != indices.end()) {
+        return {indices[target - nums[i]], i};
       }
+      indices[nums[i]] = i;
     }
-
     return {};
   }
 };

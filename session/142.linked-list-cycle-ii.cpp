@@ -6,11 +6,11 @@
  * https://leetcode.cn/problems/linked-list-cycle-ii/description/
  *
  * algorithms
- * Medium (56.31%)
- * Likes:    1685
+ * Medium (58.04%)
+ * Likes:    2423
  * Dislikes: 0
- * Total Accepted:    497.7K
- * Total Submissions: 883.9K
+ * Total Accepted:    794K
+ * Total Submissions: 1.4M
  * Testcase Example:  '[3,2,0,-4]\n1'
  *
  * Given the head of a linked list, return the node where the cycle begins. If
@@ -66,9 +66,6 @@
  */
 
 // @lc code=start
-#include <bits/stdc++.h>
-using namespace std;
-
 // struct ListNode {
 //   int val;
 //   ListNode *next;
@@ -78,28 +75,27 @@ using namespace std;
 class Solution {
  public:
   ListNode *detectCycle(ListNode *head) {
-    if (!head || !head->next || !head->next->next) {
-      return nullptr;
-    }
-    ListNode *fast{head}, *slow{head};
-    while (fast->next != nullptr && fast->next->next != nullptr) {
-      fast = fast->next->next;
+    auto fast{head}, slow{head};
+
+    while (nullptr != fast) {
       slow = slow->next;
-      if (fast == slow) {
-        break;
+      if (nullptr != fast->next) {
+        fast = fast->next->next;
+      } else {
+        return nullptr;
+      }
+
+      if (slow == fast) {
+        auto p{head};
+        while (p != slow) {
+          p = p->next;
+          slow = slow->next;
+        }
+        return p;
       }
     }
 
-    if (fast != slow) {
-      return nullptr;
-    }
-
-    slow = head;
-    while (slow != fast) {
-      slow = slow->next;
-      fast = fast->next;
-    }
-    return slow;
+    return nullptr;
   }
 };
 // @lc code=end

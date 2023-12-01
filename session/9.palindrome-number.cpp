@@ -6,20 +6,15 @@
  * https://leetcode.cn/problems/palindrome-number/description/
  *
  * algorithms
- * Easy (57.12%)
- * Likes:    2104
+ * Easy (55.84%)
+ * Likes:    2756
  * Dislikes: 0
- * Total Accepted:    1.1M
- * Total Submissions: 1.9M
+ * Total Accepted:    1.5M
+ * Total Submissions: 2.7M
  * Testcase Example:  '121'
  *
- * Given an integer x, return true if x is palindrome integer.
- *
- * An integer is a palindrome when it reads the same backward as forward.
- *
- *
- * For example, 121 is a palindrome while 123 is not.
- *
+ * Given an integer x, return true if x is a palindrome, and false
+ * otherwise.
  *
  *
  * Example 1:
@@ -60,34 +55,24 @@
  */
 
 // @lc code=start
-#include <bits/stdc++.h>
-
-using namespace std;
-
 class Solution {
  public:
   bool isPalindrome(int x) {
-    if (x < 0) {
+    if (x < 0 || (x != 0 && x % 10 == 0)) {
       return false;
-    } else if (0 == x) {
-      return true;
-    }
-    auto str{to_string(x)};
-    bool is_palindrome{true};
-    for (size_t i = 0, j = str.length() - 1; i < str.length() && j >= 0;
-         ++i, --j) {
-      if (i < j) {
-        if (str[i] == str[j]) {
-          continue;
-        } else {
-          is_palindrome = false;
-        }
-      } else if (i == j) {
-        continue;
-      }
     }
 
-    return is_palindrome;
+    int sum{0};
+    while (x > sum) {
+      sum = sum * 10 + x % 10;
+      x = x / 10;
+    }
+
+    if (x == sum || x == sum / 10) {
+      return true;
+    } else {
+      return false;
+    }
   }
 };
 // @lc code=end

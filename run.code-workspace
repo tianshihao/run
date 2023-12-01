@@ -112,7 +112,7 @@
     "workbench.editor.showTabs": "multiple",
     "workbench.editor.titleScrollbarSizing": "large",
     "vim.showMarksInGutter": true,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 2,
     "[cpp]": {
       "editor.defaultFormatter": "ms-vscode.cpptools"
     },

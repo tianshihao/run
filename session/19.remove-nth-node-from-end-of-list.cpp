@@ -6,11 +6,11 @@
  * https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/
  *
  * algorithms
- * Medium (44.40%)
- * Likes:    2142
+ * Medium (46.80%)
+ * Likes:    2771
  * Dislikes: 0
- * Total Accepted:    865.8K
- * Total Submissions: 1.9M
+ * Total Accepted:    1.3M
+ * Total Submissions: 2.7M
  * Testcase Example:  '[1,2,3,4,5]\n2'
  *
  * Given the head of a linked list, remove the n^th node from the end of the
@@ -54,42 +54,41 @@
  */
 
 // @lc code=start
-#include <bits/stdc++.h>
-using namespace std;
-
 // struct ListNode {
 //   int val;
-//   ListNode* next;
+//   ListNode *next;
 //   ListNode() : val(0), next(nullptr) {}
 //   ListNode(int x) : val(x), next(nullptr) {}
-//   ListNode(int x, ListNode* next) : val(x), next(next) {}
+//   ListNode(int x, ListNode *next) : val(x), next(next) {}
 // };
 
 class Solution {
  public:
-  ListNode* removeNthFromEnd(ListNode* head, int n) {
-    if (nullptr == head) {
-      return nullptr;
+  ListNode *removeNthFromEnd(ListNode *head, int n) {
+    auto length{getLength(head)};
+    auto dummy{new ListNode(0, head)};
+    auto p{dummy};
+    auto step{length - n};
+
+    while (0 < step--) {
+      p = p->next;
     }
-    ListNode dummy(-1, head);
-    ListNode *fast{&dummy}, *slow{&dummy};
-
-    while (fast->next && n--) {
-      fast = fast->next;
+    if (nullptr != p->next) {
+      p->next = p->next->next;
+    } else {
+      p->next = nullptr;
     }
 
-    while (fast->next) {
-      fast = fast->next;
-      slow = slow->next;
+    return dummy->next;
+  }
+
+  int getLength(ListNode *head) {
+    int len{0};
+    while (nullptr != head) {
+      ++len;
+      head = head->next;
     }
-
-    ListNode* to_be_deleted = slow->next;
-
-    slow->next = slow->next->next;
-
-    delete to_be_deleted;
-
-    return dummy.next;
+    return len;
   }
 };
 // @lc code=end

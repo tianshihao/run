@@ -6,11 +6,11 @@
  * https://leetcode.cn/problems/reverse-linked-list/description/
  *
  * algorithms
- * Easy (73.17%)
- * Likes:    2638
+ * Easy (73.78%)
+ * Likes:    3455
  * Dislikes: 0
- * Total Accepted:    1.1M
- * Total Submissions: 1.5M
+ * Total Accepted:    1.7M
+ * Total Submissions: 2.3M
  * Testcase Example:  '[1,2,3,4,5]'
  *
  * Given the head of a singly linked list, reverse the list, and return the
@@ -53,9 +53,6 @@
  */
 
 // @lc code=start
-#include <bits/stdc++.h>
-using namespace std;
-
 // struct ListNode {
 //   int val;
 //   ListNode* next;
@@ -67,37 +64,22 @@ using namespace std;
 class Solution {
  public:
   ListNode* reverseList(ListNode* head) {
-    ListNode* prev{nullptr};
-    while (head) {
-      // backup head.
-      ListNode* next{head->next};
-      // head point to prev.
-      head->next = prev;
-      // update prev.
-      prev = head;
-      // restore head.
-      head = next;
+    auto dummy{new ListNode(0, head)};
+    auto p{head};
+
+    auto old_head{nullptr};
+    auto next{p->next};
+
+    while (nullptr != p) {
+      dummy->next = p;
+      p->next = old_head;
+
+      p = next;
+      next = p->next;
+      old_head = dummy->next;
     }
 
-    return prev;
+    return dummy->next;
   }
 };
-
-// int main(int argc, char** argv) {
-//   ListNode node1(1);
-//   ListNode node2(2);
-//   ListNode node3(3);
-//   ListNode node4(4);
-//   ListNode node5(5);
-//   node1.next = &node2;
-//   node2.next = &node3;
-//   node3.next = &node4;
-//   node4.next = &node5;
-
-//   Solution s;
-//   s.reverseList(&node1);
-
-//   return 0;
-// }
-
 // @lc code=end
