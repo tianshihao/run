@@ -109,7 +109,7 @@
       "syncstream": "cpp"
     },
     "window.title": "🏃‍♂️💨",
-    "workbench.editor.showTabs": true,
+    "workbench.editor.showTabs": "multiple",
     "workbench.editor.titleScrollbarSizing": "large",
     "vim.showMarksInGutter": true,
     "window.zoomLevel": 1,

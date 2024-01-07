@@ -1,5 +1,3 @@
-find_package (glog 0.7.0 REQUIRED)
-
 # Get names of all subdirectories. In CMake language.
 file(GLOB subdirs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
 
@@ -14,6 +12,11 @@ endforeach()
 
 # For each subdirectory to process...
 foreach(subdir ${subdirs_to_process})
+    # Skip the insight_service folder
+    if(${subdir} STREQUAL "insight_service")
+        continue()
+    endif()
+
     # Check if it has not a main.cpp file in it.
     if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${subdir}/main.cpp)
         # Create a main.cpp file in it. The main.cpp contains a simple
@@ -68,9 +71,5 @@ foreach(subdir ${subdirs_to_process})
     set_target_properties(${EX_EXEC_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
     # Link the executable target to the shared library target.
-    target_link_libraries(${EX_EXEC_NAME} ${EX_LIB_NAME} glog::glog)
-
+    target_link_libraries(${EX_EXEC_NAME} ${EX_LIB_NAME})
 endforeach()
-
-
-
