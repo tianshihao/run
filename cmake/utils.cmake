@@ -153,6 +153,7 @@ macro(CONFIGURE_MODULE MODULE_NAME MODULE_CMAKE_LIST_DIR TARGET_LIST)
     if(SOURCE_FILES)
       add_library(${LIBRARY_NAME} STATIC ${SOURCE_FILES})
       set_target_properties(${LIBRARY_NAME} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+      set_target_properties(${LIBRARY_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
       if(MSVC)
         # Warning level 4 and all warnings as errors.
@@ -167,7 +168,6 @@ macro(CONFIGURE_MODULE MODULE_NAME MODULE_CMAKE_LIST_DIR TARGET_LIST)
       # SETTING INCLUDE DIRECTORY AND LINKING.
       target_include_directories(${LIBRARY_NAME} PUBLIC ${SUBDIR_ABSPATH}/include
         PUBLIC ${CMAKE_SOURCE_DIR}/utils)
-      target_link_libraries(${LIBRARY_NAME} PUBLIC run-utils)
 
       list(APPEND TARGET_LIST ${LIBRARY_NAME})
     endif()
@@ -197,10 +197,11 @@ macro(CONFIGURE_MODULE MODULE_NAME MODULE_CMAKE_LIST_DIR TARGET_LIST)
 
     target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_std_17)
 
+    set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+
     # SETTING INCLUDE DIRECTORY AND LINKING.
     target_include_directories(${EXECUTABLE_NAME} PUBLIC ${SUBDIR_ABSPATH}/include
       PUBLIC ${CMAKE_SOURCE_DIR}/utils)
-    target_link_libraries(${EXECUTABLE_NAME} PUBLIC run-utils)
 
     list(APPEND TARGET_LIST ${EXECUTABLE_NAME})
   endforeach(VAL RANGE ${LENGTH2})
