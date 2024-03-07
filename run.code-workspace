@@ -177,11 +177,33 @@
         // "miDebuggerPath": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\gdb.exe",
         "setupCommands": [
           {
-            "description": "为 gdb 启用整齐打印",
+            "description": "Enable pretty-printing for gdb",
             "text": "-enable-pretty-printing",
             "ignoreFailures": true
           }
         ]
+      },
+      {
+        "name": "g++ - Build and debug active file",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb",
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "preLaunchTask": "g++ build active file",
+        "internalConsoleOptions": "openOnSessionStart"
       }
     ],
     "inputs": [
@@ -197,16 +219,27 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "test",
         "type": "shell",
-        // "command": "${command:cmake.launchTargetPath}",
-        "command": "${command:cmake.ctest}",
-        "args": [],
-        "group": {
-          "kind": "test",
-          "isDefault": true
+        "label": "g++ build active file",
+        "command": "/usr/bin/g++",
+        "args": [
+          "-g",
+          "-O0",
+          "-std=c++17",
+          "${file}",
+          "-o",
+          "${workspaceFolder}/build/${fileBasenameNoExtension}"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/build"
         },
-        "problemMatcher": []
+        "problemMatcher": [
+          "$gcc"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
       }
     ]
   }
