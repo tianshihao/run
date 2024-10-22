@@ -5,13 +5,15 @@
 #include <vector>
 
 struct Sample {
-  Sample() noexcept { std::cout << "default ctor" << std::endl; }
-  Sample(int a) noexcept : _a{a} { std::cout << "ctor" << std::endl; }
+  Sample() noexcept { std::cout << "default constructor" << std::endl; }
+  Sample(int const& a) noexcept : _a{a} {
+    std::cout << "constructor" << std::endl;
+  }
   Sample(Sample const& other) noexcept : _a{other._a} {
-    std::cout << "copy ctor" << std::endl;
+    std::cout << "copy constructor" << std::endl;
   }
   Sample(Sample&& other) noexcept : _a{std::move(other._a)} {
-    std::cout << "move ctor" << std::endl;
+    std::cout << "move constructor" << std::endl;
   }
 
   int _a;
@@ -20,24 +22,31 @@ struct Sample {
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
   std::vector<Sample> vec;
 
-  std::cout << "push_back int" << std::endl;
+  std::cout << "Testing push_back int" << std::endl;
   vec.push_back(1);
-  // vec.emplace(Sample{1});
-  std::cout << "emplace_back int" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Testing emplace_back int" << std::endl;
   vec.emplace_back(1);
+  std::cout << std::endl;
 
   Sample s{1};
 
-  std::cout << "push_back obj" << std::endl;
+  std::cout << "Testing push_back object" << std::endl;
   vec.push_back(s);
+  std::cout << std::endl;
 
-  std::cout << "emplace_back obj" << std::endl;
+  std::cout << "Testing emplace_back object" << std::endl;
   vec.emplace_back(s);
+  std::cout << std::endl;
 
-  std::cout << "push_back temp obj" << std::endl;
+  std::cout << "Testing push_back temporal object" << std::endl;
   vec.push_back(Sample{1});
-  std::cout << "emplace_back temp obj" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << "Tesing emplace_back temporal object" << std::endl;
   vec.emplace_back(Sample{1});
+  std::cout << std::endl;
 
   return 0;
 }
