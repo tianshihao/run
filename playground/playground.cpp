@@ -1,54 +1,94 @@
-#include <algorithm>  // for std::any_of
-#include <array>
-#include <atomic>
+#include <cmath>
 #include <iostream>
-#include <string>
+#include <memory>
 #include <vector>
 
-#define GOOGLE_ARRAYSIZE(a)     \
-  ((sizeof(a) / sizeof(*(a))) / \
-   static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
+// Forward declaration of visitor interface to avoid circular dependency
+class Circle;
+class Rectangle;
 
-// singleton
-class Singleton {
+// 访问者接口
+class Visitor {
  public:
-  static Singleton& getInstance() {
-    static Singleton instance;
-    return instance;
-  }
-
-  Singleton(const Singleton&) = delete;
-  Singleton& operator=(const Singleton&) = delete;
-
-  std::string SetName() {
-    // Get the input from the user
-    std::string name;
-    std::cout << "Enter your name: ";
-    std::cin >> name;
-    return name;
-  }
-
- private:
-  Singleton() = default;
+  virtual void visit(Circle* c) = 0;
+  virtual void visit(Rectangle* r) = 0;
 };
 
-// static const std::string name{Singleton::getInstance().SetName()};
+// 元素接口
+class Shape {
+ public:
+  virtual void accept(Visitor* visitor) = 0;
+  virtual ~Shape() = default;  // 确保基类有虚析构函数
+};
+
+// 具体元素 - 圆形
+class Circle : public Shape {
+ public:
+  Circle(double radius) : radius(radius) {}
+
+  void accept(Visitor* visitor) override { visitor->visit(this); }
+
+  double getRadius() const { return radius; }
+
+ private:
+  double radius;
+};
+
+// 具体元素 - 矩形
+class Rectangle : public Shape {
+ public:
+  Rectangle(double width, double height) : width(width), height(height) {}
+
+  void accept(Visitor* visitor) override { visitor->visit(this); }
+
+  double getWidth() const { return width; }
+  double getHeight() const { return height; }
+
+ private:
+  double width;
+  double height;
+};
+
+// 具体访问者 - 计算面积
+class AreaVisitor : public Visitor {
+ public:
+  void visit(Circle* c) override {
+    double area = M_PI * std::pow(c->getRadius(), 2);
+    std::cout << "Circle area: " << area << std::endl;
+  }
+
+  void visit(Rectangle* r) override {
+    double area = r->getWidth() * r->getHeight();
+    std::cout << "Rectangle area: " << area << std::endl;
+  }
+};
+
+// 具体访问者 - 计算周长
+class PerimeterVisitor : public Visitor {
+ public:
+  void visit(Circle* c) override {
+    double perimeter = 2 * M_PI * c->getRadius();
+    std::cout << "Circle perimeter: " << perimeter << std::endl;
+  }
+
+  void visit(Rectangle* r) override {
+    double perimeter = 2 * (r->getWidth() + r->getHeight());
+    std::cout << "Rectangle perimeter: " << perimeter << std::endl;
+  }
+};
 
 int main() {
-  // std::array<int, 5> arr = {1, 2, 3, 4, 5};
-  // std::cout << "Array size: " << GOOGLE_ARRAYSIZE(arr) << std::endl;
+  std::vector<std::unique_ptr<Shape>> shapes;
+  shapes.push_back(std::make_unique<Circle>(5));
+  shapes.push_back(std::make_unique<Rectangle>(3, 7));
 
-  // define a c style array
-  // int arr[] = {1, 2, 3, 4, 5};
-  // double* arr{new double[1]{3.}};
-  double* arr;
-  std::cout << "Array size: " << GOOGLE_ARRAYSIZE(arr) << std::endl;
-  std::cout << "sizeof(arr): " << sizeof(arr) << std::endl;
-  std::cout << "sizeof(*(arr)): " << sizeof(*(arr)) << std::endl;
-  std::cout << "sizeof(arr) / sizeof(*(arr)): " << sizeof(arr) / sizeof(*(arr))
-            << std::endl;
-  std::cout << "!(sizeof(arr) % sizeof(*(arr))): "
-            << !(sizeof(arr) % sizeof(*(arr))) << std::endl;
+  AreaVisitor areaVisitor;
+  PerimeterVisitor perimeterVisitor;
+
+  for (const auto& shape : shapes) {
+    shape->accept(&areaVisitor);
+    shape->accept(&perimeterVisitor);
+  }
 
   return 0;
 }
