@@ -1,0 +1,5 @@
+function(target_link_threads target)
+    if(NOT MSVC)
+        target_link_libraries(${target} pthread)
+    endif()
+endfunction()
