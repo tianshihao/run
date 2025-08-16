@@ -106,7 +106,8 @@
       "semaphore": "cpp",
       "span": "cpp",
       "stop_token": "cpp",
-      "syncstream": "cpp"
+      "syncstream": "cpp",
+      "format": "cpp"
     },
     "window.title": "🏃‍♂️💨",
     "workbench.editor.showTabs": "multiple",
@@ -138,16 +139,16 @@
       "github.copilot-chat",
       "github.copilot-nightly",
       "github.copilot",
-      "miguelsolorio.fluent-icons",
-      "pkief.material-icon-theme",
-      "sdras.night-owl",
-      "vscodevim.vim",
-      "ms-vscode.cpptools",
       "josetr.cmake-language-support-vscode",
       "leetcode.vscode-leetcode",
+      "llvm-vs-code-extensions.vscode-clangd",
+      "miguelsolorio.fluent-icons",
       "ms-vscode.cmake-tools",
+      "ms-vscode.cpptools",
+      "pkief.material-icon-theme",
+      "sdras.night-owl",
       "twxs.cmake",
-      "llvm-vs-code-extensions.vscode-clangd"
+      "vscodevim.vim"
     ]
   },
   "launch": {
