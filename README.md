@@ -1,3 +1,1 @@
-# Run 🏃‍♂️💨
-
-Sharpen mind and kill time.☕
+pip install beautifulsoup4

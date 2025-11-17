@@ -1,0 +1,7 @@
+# 飞书API配置
+app_id: "cli_a98748f5e3b9500c"
+app_secret: "BdJzf2uTiHhM8u7vkBRaMe3C8sd1iFLu"
+folder_token: "SvurfsQiGlzGggdZuANc9GvWnBd"
+# base_url: "https://open.feishu.cn/open-apis"
+docx_base_url: "https://xyv2stoud3.feishu.cn/docx"
+default_title: "这是第一个测试文档"
